@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Tenenciadelavivienda2015_1.js"></script>
+        <script src="data/Tenenciadelavivienda2020_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.063774998490892,-99.6432192404551],[19.637519284648906,-98.77114642983517]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Mapabase_0');
+        map.getPane('pane_Mapabase_0').style.zIndex = 400;
+        var layer_Mapabase_0 = L.tileLayer('http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Mapabase_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Mapabase_0;
+        map.addLayer(layer_Mapabase_0);
+        function pop_Tenenciadelavivienda2015_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['g_pnt_2'] !== null ? autolinker.link(feature.properties['g_pnt_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geo_shp'] !== null ? autolinker.link(feature.properties['geo_shp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AÑO'] !== null ? autolinker.link(feature.properties['AÑO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MUN'] !== null ? autolinker.link(feature.properties['MUN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['1_DUEÑA'] !== null ? autolinker.link(feature.properties['1_DUEÑA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['2_RENTA'] !== null ? autolinker.link(feature.properties['2_RENTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['3_PRESTADA'] !== null ? autolinker.link(feature.properties['3_PRESTADA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['4_OCUPADO_'] !== null ? autolinker.link(feature.properties['4_OCUPADO_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['9_NO ESPEC'] !== null ? autolinker.link(feature.properties['9_NO ESPEC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['EN BLANCO'] !== null ? autolinker.link(feature.properties['EN BLANCO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TOTAL'] !== null ? autolinker.link(feature.properties['TOTAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_DUEÑ'] !== null ? autolinker.link(feature.properties['PORC_DUEÑ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_RENTA'] !== null ? autolinker.link(feature.properties['PORC_RENTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_PREST'] !== null ? autolinker.link(feature.properties['PORC_PREST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_OTRA_'] !== null ? autolinker.link(feature.properties['PORC_OTRA_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_NO_ES'] !== null ? autolinker.link(feature.properties['PORC_NO_ES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_TOTAL'] !== null ? autolinker.link(feature.properties['PORC_TOTAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Tenenciadelavivienda2015_1_0(feature) {
+            if (feature.properties['PORC_RENTA'] >= 10.370000 && feature.properties['PORC_RENTA'] <= 10.370000 ) {
+                return {
+                pane: 'pane_Tenenciadelavivienda2015_1',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,209,208,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PORC_RENTA'] >= 10.370000 && feature.properties['PORC_RENTA'] <= 17.600000 ) {
+                return {
+                pane: 'pane_Tenenciadelavivienda2015_1',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,164,164,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PORC_RENTA'] >= 17.600000 && feature.properties['PORC_RENTA'] <= 26.020000 ) {
+                return {
+                pane: 'pane_Tenenciadelavivienda2015_1',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(177,212,209,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PORC_RENTA'] >= 26.020000 && feature.properties['PORC_RENTA'] <= 38.940000 ) {
+                return {
+                pane: 'pane_Tenenciadelavivienda2015_1',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(99,139,135,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Tenenciadelavivienda2015_1');
+        map.getPane('pane_Tenenciadelavivienda2015_1').style.zIndex = 401;
+        map.getPane('pane_Tenenciadelavivienda2015_1').style['mix-blend-mode'] = 'normal';
+        var layer_Tenenciadelavivienda2015_1 = new L.geoJson(json_Tenenciadelavivienda2015_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Tenenciadelavivienda2015_1',
+            layerName: 'layer_Tenenciadelavivienda2015_1',
+            pane: 'pane_Tenenciadelavivienda2015_1',
+            onEachFeature: pop_Tenenciadelavivienda2015_1,
+            style: style_Tenenciadelavivienda2015_1_0,
+        });
+        bounds_group.addLayer(layer_Tenenciadelavivienda2015_1);
+        function pop_Tenenciadelavivienda2020_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['g_pnt_2'] !== null ? autolinker.link(feature.properties['g_pnt_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geo_shp'] !== null ? autolinker.link(feature.properties['geo_shp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AÑO'] !== null ? autolinker.link(feature.properties['AÑO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVE_MUN_1'] !== null ? autolinker.link(feature.properties['CVE_MUN_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MUN'] !== null ? autolinker.link(feature.properties['MUN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['1_DUEÑA'] !== null ? autolinker.link(feature.properties['1_DUEÑA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['2_RENTA'] !== null ? autolinker.link(feature.properties['2_RENTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['3_PRESTADA'] !== null ? autolinker.link(feature.properties['3_PRESTADA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['4_OCUPADO_'] !== null ? autolinker.link(feature.properties['4_OCUPADO_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['9_NO ESPEC'] !== null ? autolinker.link(feature.properties['9_NO ESPEC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['EN BLANCO'] !== null ? autolinker.link(feature.properties['EN BLANCO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TOTAL'] !== null ? autolinker.link(feature.properties['TOTAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_DUEÑ'] !== null ? autolinker.link(feature.properties['PORC_DUEÑ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_RENTA'] !== null ? autolinker.link(feature.properties['PORC_RENTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_PREST'] !== null ? autolinker.link(feature.properties['PORC_PREST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_OTRA_'] !== null ? autolinker.link(feature.properties['PORC_OTRA_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_NO_ES'] !== null ? autolinker.link(feature.properties['PORC_NO_ES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PORC_TOTAL'] !== null ? autolinker.link(feature.properties['PORC_TOTAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Tenenciadelavivienda2020_2_0(feature) {
+            if (feature.properties['PORC_RENTA'] >= 10.260000 && feature.properties['PORC_RENTA'] <= 12.730000 ) {
+                return {
+                pane: 'pane_Tenenciadelavivienda2020_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(78,205,238,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PORC_RENTA'] >= 12.730000 && feature.properties['PORC_RENTA'] <= 18.700000 ) {
+                return {
+                pane: 'pane_Tenenciadelavivienda2020_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(94,140,236,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PORC_RENTA'] >= 18.700000 && feature.properties['PORC_RENTA'] <= 27.350000 ) {
+                return {
+                pane: 'pane_Tenenciadelavivienda2020_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,82,209,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PORC_RENTA'] >= 27.350000 && feature.properties['PORC_RENTA'] <= 40.650000 ) {
+                return {
+                pane: 'pane_Tenenciadelavivienda2020_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,99,149,0.5019607843137255)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Tenenciadelavivienda2020_2');
+        map.getPane('pane_Tenenciadelavivienda2020_2').style.zIndex = 402;
+        map.getPane('pane_Tenenciadelavivienda2020_2').style['mix-blend-mode'] = 'normal';
+        var layer_Tenenciadelavivienda2020_2 = new L.geoJson(json_Tenenciadelavivienda2020_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Tenenciadelavivienda2020_2',
+            layerName: 'layer_Tenenciadelavivienda2020_2',
+            pane: 'pane_Tenenciadelavivienda2020_2',
+            onEachFeature: pop_Tenenciadelavivienda2020_2,
+            style: style_Tenenciadelavivienda2020_2_0,
+        });
+        bounds_group.addLayer(layer_Tenenciadelavivienda2020_2);
+        map.addLayer(layer_Tenenciadelavivienda2020_2);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Tenencia de la vivienda 2020<br /><table><tr><td style="text-align: center;"><img src="legend/Tenenciadelavivienda2020_2_1031270.png" /></td><td>10.3 - 12.7</td></tr><tr><td style="text-align: center;"><img src="legend/Tenenciadelavivienda2020_2_1271871.png" /></td><td>12.7 - 18.7</td></tr><tr><td style="text-align: center;"><img src="legend/Tenenciadelavivienda2020_2_1872742.png" /></td><td>18.7 - 27.4</td></tr><tr><td style="text-align: center;"><img src="legend/Tenenciadelavivienda2020_2_2744063.png" /></td><td>27.4 - 40.6</td></tr></table>': layer_Tenenciadelavivienda2020_2,'Tenencia de la vivienda 2015<br /><table><tr><td style="text-align: center;"><img src="legend/Tenenciadelavivienda2015_1_1041040.png" /></td><td>10.4 - 10.4</td></tr><tr><td style="text-align: center;"><img src="legend/Tenenciadelavivienda2015_1_1041761.png" /></td><td>10.4 - 17.6</td></tr><tr><td style="text-align: center;"><img src="legend/Tenenciadelavivienda2015_1_176262.png" /></td><td>17.6 - 26</td></tr><tr><td style="text-align: center;"><img src="legend/Tenenciadelavivienda2015_1_263893.png" /></td><td>26 - 38.9</td></tr></table>': layer_Tenenciadelavivienda2015_1,"Mapa base": layer_Mapabase_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_Tenenciadelavivienda2015_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['PORC_RENTA'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['PORC_RENTA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Tenenciadelavivienda2015_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_Tenenciadelavivienda2020_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['PORC_RENTA'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['PORC_RENTA']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Tenenciadelavivienda2020_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_Tenenciadelavivienda2015_1,layer_Tenenciadelavivienda2020_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Tenenciadelavivienda2015_1,layer_Tenenciadelavivienda2020_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Tenenciadelavivienda2015_1,layer_Tenenciadelavivienda2020_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Tenenciadelavivienda2015_1,layer_Tenenciadelavivienda2020_2]);
+        });
+        </script>
+    </body>
+</html>
