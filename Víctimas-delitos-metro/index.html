@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Lmitealcaldas_1.js"></script>
+        <script src="data/STC_Metro_lineas_2.js"></script>
+        <script src="data/Vctimasfemeninasdedelitossexuales_3.js"></script>
+        <script src="data/Vctimas_puntos250m_4.js"></script>
+        <script src="data/Buffer250m_5.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.405138807843834,-99.21057946634596],[19.472725404573307,-99.0698009955608]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Mapabase_0');
+        map.getPane('pane_Mapabase_0').style.zIndex = 400;
+        var layer_Mapabase_0 = L.tileLayer('http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Mapabase_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Mapabase_0;
+        map.addLayer(layer_Mapabase_0);
+        function pop_Lmitealcaldas_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['X_id'] !== null ? autolinker.link(feature.properties['X_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_ent'] !== null ? autolinker.link(feature.properties['cve_ent'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cvegeo'] !== null ? autolinker.link(feature.properties['cvegeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['g_pnt_2'] !== null ? autolinker.link(feature.properties['g_pnt_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geo_shp'] !== null ? autolinker.link(feature.properties['geo_shp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['municip'] !== null ? autolinker.link(feature.properties['municip'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lmitealcaldas_1_0() {
+            return {
+                pane: 'pane_Lmitealcaldas_1',
+                opacity: 1,
+                color: 'rgba(75,75,75,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,166,178,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Lmitealcaldas_1');
+        map.getPane('pane_Lmitealcaldas_1').style.zIndex = 401;
+        map.getPane('pane_Lmitealcaldas_1').style['mix-blend-mode'] = 'normal';
+        var layer_Lmitealcaldas_1 = new L.geoJson(json_Lmitealcaldas_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Lmitealcaldas_1',
+            layerName: 'layer_Lmitealcaldas_1',
+            pane: 'pane_Lmitealcaldas_1',
+            onEachFeature: pop_Lmitealcaldas_1,
+            style: style_Lmitealcaldas_1_0,
+        });
+        bounds_group.addLayer(layer_Lmitealcaldas_1);
+        map.addLayer(layer_Lmitealcaldas_1);
+        function pop_STC_Metro_lineas_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SISTEMA'] !== null ? autolinker.link(feature.properties['SISTEMA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LINEA'] !== null ? autolinker.link(feature.properties['LINEA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['RUTA'] !== null ? autolinker.link(feature.properties['RUTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_STC_Metro_lineas_2_0(feature) {
+            switch(String(feature.properties['LINEA'])) {
+                case '1':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(245,99,148,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(0,100,168,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(174,158,40,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case '4':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(111,182,174,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case '5':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(253,224,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case '6':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(254,17,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case '7':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(254,99,9,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case '8':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(1,135,74,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case '9':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(91,44,42,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case 'A':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(163,39,125,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case 'B':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(0,131,57,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+                case '12':
+                    return {
+                pane: 'pane_STC_Metro_lineas_2',
+                opacity: 1,
+                color: 'rgba(187,156,84,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_STC_Metro_lineas_2');
+        map.getPane('pane_STC_Metro_lineas_2').style.zIndex = 402;
+        map.getPane('pane_STC_Metro_lineas_2').style['mix-blend-mode'] = 'normal';
+        var layer_STC_Metro_lineas_2 = new L.geoJson(json_STC_Metro_lineas_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_STC_Metro_lineas_2',
+            layerName: 'layer_STC_Metro_lineas_2',
+            pane: 'pane_STC_Metro_lineas_2',
+            onEachFeature: pop_STC_Metro_lineas_2,
+            style: style_STC_Metro_lineas_2_0,
+        });
+        bounds_group.addLayer(layer_STC_Metro_lineas_2);
+        map.addLayer(layer_STC_Metro_lineas_2);
+        function pop_Vctimasfemeninasdedelitossexuales_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SISTEMA'] !== null ? autolinker.link(feature.properties['SISTEMA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LINEA'] !== null ? autolinker.link(feature.properties['LINEA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['EST'] !== null ? autolinker.link(feature.properties['EST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVE_EST'] !== null ? autolinker.link(feature.properties['CVE_EST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVE_EOD17'] !== null ? autolinker.link(feature.properties['CVE_EOD17'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TIPO'] !== null ? autolinker.link(feature.properties['TIPO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ALCALDIAS'] !== null ? autolinker.link(feature.properties['ALCALDIAS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AÑO'] !== null ? autolinker.link(feature.properties['AÑO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Carpetas_s'] !== null ? autolinker.link(feature.properties['Carpetas_s'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Vctimasfemeninasdedelitossexuales_3_0(feature) {
+            if (feature.properties['Carpetas_s'] >= 1.000000 && feature.properties['Carpetas_s'] <= 7.000000 ) {
+                return {
+                pane: 'pane_Vctimasfemeninasdedelitossexuales_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,22,127,0.6)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['Carpetas_s'] >= 7.000000 && feature.properties['Carpetas_s'] <= 25.000000 ) {
+                return {
+                pane: 'pane_Vctimasfemeninasdedelitossexuales_3',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,22,127,0.6)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['Carpetas_s'] >= 25.000000 && feature.properties['Carpetas_s'] <= 73.000000 ) {
+                return {
+                pane: 'pane_Vctimasfemeninasdedelitossexuales_3',
+                radius: 14.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,22,127,0.6)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['Carpetas_s'] >= 73.000000 && feature.properties['Carpetas_s'] <= 177.000000 ) {
+                return {
+                pane: 'pane_Vctimasfemeninasdedelitossexuales_3',
+                radius: 21.6,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,22,127,0.6)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['Carpetas_s'] >= 177.000000 && feature.properties['Carpetas_s'] <= 296.000000 ) {
+                return {
+                pane: 'pane_Vctimasfemeninasdedelitossexuales_3',
+                radius: 28.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,22,127,0.6)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Vctimasfemeninasdedelitossexuales_3');
+        map.getPane('pane_Vctimasfemeninasdedelitossexuales_3').style.zIndex = 403;
+        map.getPane('pane_Vctimasfemeninasdedelitossexuales_3').style['mix-blend-mode'] = 'normal';
+        var layer_Vctimasfemeninasdedelitossexuales_3 = new L.geoJson(json_Vctimasfemeninasdedelitossexuales_3, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Vctimasfemeninasdedelitossexuales_3',
+            layerName: 'layer_Vctimasfemeninasdedelitossexuales_3',
+            pane: 'pane_Vctimasfemeninasdedelitossexuales_3',
+            onEachFeature: pop_Vctimasfemeninasdedelitossexuales_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Vctimasfemeninasdedelitossexuales_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Vctimasfemeninasdedelitossexuales_3);
+        map.addLayer(layer_Vctimasfemeninasdedelitossexuales_3);
+        function pop_Vctimas_puntos250m_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['idCarpeta'] !== null ? autolinker.link(feature.properties['idCarpeta'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['A�o_inic'] !== null ? autolinker.link(feature.properties['A�o_inic'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Mes_inicio'] !== null ? autolinker.link(feature.properties['Mes_inicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FechaInici'] !== null ? autolinker.link(feature.properties['FechaInici'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Delito'] !== null ? autolinker.link(feature.properties['Delito'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Categoria'] !== null ? autolinker.link(feature.properties['Categoria'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Sexo'] !== null ? autolinker.link(feature.properties['Sexo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Edad'] !== null ? autolinker.link(feature.properties['Edad'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TipoPerson'] !== null ? autolinker.link(feature.properties['TipoPerson'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CalidadJur'] !== null ? autolinker.link(feature.properties['CalidadJur'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['competenci'] !== null ? autolinker.link(feature.properties['competenci'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Año_hecho'] !== null ? autolinker.link(feature.properties['Año_hecho'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Mes_hecho'] !== null ? autolinker.link(feature.properties['Mes_hecho'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FechaHecho'] !== null ? autolinker.link(feature.properties['FechaHecho'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['HoraHecho'] !== null ? autolinker.link(feature.properties['HoraHecho'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['HoraInicio'] !== null ? autolinker.link(feature.properties['HoraInicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['alcaldia_h'] !== null ? autolinker.link(feature.properties['alcaldia_h'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['municipio_'] !== null ? autolinker.link(feature.properties['municipio_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['colonia_da'] !== null ? autolinker.link(feature.properties['colonia_da'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fgj_coloni'] !== null ? autolinker.link(feature.properties['fgj_coloni'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['latitud'] !== null ? autolinker.link(feature.properties['latitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['longitud'] !== null ? autolinker.link(feature.properties['longitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_23'] !== null ? autolinker.link(feature.properties['field_23'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Vctimas_puntos250m_4_0() {
+            return {
+                pane: 'pane_Vctimas_puntos250m_4',
+                radius: 2.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(37,21,60,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Vctimas_puntos250m_4');
+        map.getPane('pane_Vctimas_puntos250m_4').style.zIndex = 404;
+        map.getPane('pane_Vctimas_puntos250m_4').style['mix-blend-mode'] = 'normal';
+        var layer_Vctimas_puntos250m_4 = new L.geoJson(json_Vctimas_puntos250m_4, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Vctimas_puntos250m_4',
+            layerName: 'layer_Vctimas_puntos250m_4',
+            pane: 'pane_Vctimas_puntos250m_4',
+            onEachFeature: pop_Vctimas_puntos250m_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Vctimas_puntos250m_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Vctimas_puntos250m_4);
+        function pop_Buffer250m_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SISTEMA'] !== null ? autolinker.link(feature.properties['SISTEMA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LINEA'] !== null ? autolinker.link(feature.properties['LINEA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['EST'] !== null ? autolinker.link(feature.properties['EST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVE_EST'] !== null ? autolinker.link(feature.properties['CVE_EST'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVE_EOD17'] !== null ? autolinker.link(feature.properties['CVE_EOD17'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TIPO'] !== null ? autolinker.link(feature.properties['TIPO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ALCALDIAS'] !== null ? autolinker.link(feature.properties['ALCALDIAS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AÑO'] !== null ? autolinker.link(feature.properties['AÑO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Buffer250m_5_0() {
+            return {
+                pane: 'pane_Buffer250m_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Buffer250m_5');
+        map.getPane('pane_Buffer250m_5').style.zIndex = 405;
+        map.getPane('pane_Buffer250m_5').style['mix-blend-mode'] = 'normal';
+        var layer_Buffer250m_5 = new L.geoJson(json_Buffer250m_5, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Buffer250m_5',
+            layerName: 'layer_Buffer250m_5',
+            pane: 'pane_Buffer250m_5',
+            onEachFeature: pop_Buffer250m_5,
+            style: style_Buffer250m_5_0,
+        });
+        bounds_group.addLayer(layer_Buffer250m_5);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Buffer250m_5.png" /> Buffer250m': layer_Buffer250m_5,'<img src="legend/Vctimas_puntos250m_4.png" /> Víctimas_puntos 250m': layer_Vctimas_puntos250m_4,'Víctimas femeninas de delitos sexuales<br /><table><tr><td style="text-align: center;"><img src="legend/Vctimasfemeninasdedelitossexuales_3_170.png" /></td><td>1 - 7</td></tr><tr><td style="text-align: center;"><img src="legend/Vctimasfemeninasdedelitossexuales_3_7251.png" /></td><td>7 - 25</td></tr><tr><td style="text-align: center;"><img src="legend/Vctimasfemeninasdedelitossexuales_3_25732.png" /></td><td>25 - 73</td></tr><tr><td style="text-align: center;"><img src="legend/Vctimasfemeninasdedelitossexuales_3_731773.png" /></td><td>73 - 177</td></tr><tr><td style="text-align: center;"><img src="legend/Vctimasfemeninasdedelitossexuales_3_1772964.png" /></td><td>177 - 296</td></tr></table>': layer_Vctimasfemeninasdedelitossexuales_3,'STC_Metro_lineas<br /><table><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_10.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_21.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_32.png" /></td><td>3</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_43.png" /></td><td>4</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_54.png" /></td><td>5</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_65.png" /></td><td>6</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_76.png" /></td><td>7</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_87.png" /></td><td>8</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_98.png" /></td><td>9</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_A9.png" /></td><td>A</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_B10.png" /></td><td>B</td></tr><tr><td style="text-align: center;"><img src="legend/STC_Metro_lineas_2_1211.png" /></td><td>12</td></tr></table>': layer_STC_Metro_lineas_2,'<img src="legend/Lmitealcaldas_1.png" /> Límite alcaldías': layer_Lmitealcaldas_1,"Mapa base": layer_Mapabase_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
