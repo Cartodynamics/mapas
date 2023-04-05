@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Lmitealcaldas_1.js"></script>
+        <script src="data/Clustersmotocicleta2022carpetas_2.js"></script>
+        <script src="data/Robo2023Motocicleta_3.js"></script>
+        <script src="data/Mayordensidad2023motocicleta_4.js"></script>
+        <script src="data/Mayordensidad2023automvil_5.js"></script>
+        <script src="data/Clusterautomvil2022carpetas_6.js"></script>
+        <script src="data/Clusterdecarpetas2022_7.js"></script>
+        <script src="data/Robo2023automvil_8.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.126733723691043,-99.61914711641795],[19.602406281865267,-98.68709726225966]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Mapabase_0');
+        map.getPane('pane_Mapabase_0').style.zIndex = 400;
+        var layer_Mapabase_0 = L.tileLayer('http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Mapabase_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Mapabase_0;
+        map.addLayer(layer_Mapabase_0);
+        function pop_Lmitealcaldas_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['g_pnt_2'] !== null ? autolinker.link(feature.properties['g_pnt_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geo_shp'] !== null ? autolinker.link(feature.properties['geo_shp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['frecuencia'] !== null ? autolinker.link(feature.properties['frecuencia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lmitealcaldas_1_0() {
+            return {
+                pane: 'pane_Lmitealcaldas_1',
+                opacity: 1,
+                color: 'rgba(180,180,180,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,113,72,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Lmitealcaldas_1');
+        map.getPane('pane_Lmitealcaldas_1').style.zIndex = 401;
+        map.getPane('pane_Lmitealcaldas_1').style['mix-blend-mode'] = 'normal';
+        var layer_Lmitealcaldas_1 = new L.geoJson(json_Lmitealcaldas_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Lmitealcaldas_1',
+            layerName: 'layer_Lmitealcaldas_1',
+            pane: 'pane_Lmitealcaldas_1',
+            onEachFeature: pop_Lmitealcaldas_1,
+            style: style_Lmitealcaldas_1_0,
+        });
+        bounds_group.addLayer(layer_Lmitealcaldas_1);
+        map.addLayer(layer_Lmitealcaldas_1);
+        function pop_Clustersmotocicleta2022carpetas_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id_ap'] !== null ? autolinker.link(feature.properties['id_ap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ci_formato_siap_fsiap'] !== null ? autolinker.link(feature.properties['ci_formato_siap_fsiap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>fecha_de_inicio</strong><br />' + (feature.properties['fecha_de_inicio'] !== null ? autolinker.link(feature.properties['fecha_de_inicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>resumen_ap</strong><br />' + (feature.properties['resumen_ap'] !== null ? autolinker.link(feature.properties['resumen_ap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>fecha_de_los_hechos</strong><br />' + (feature.properties['fecha_de_los_hechos'] !== null ? autolinker.link(feature.properties['fecha_de_los_hechos'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>modus_situacion</strong><br />' + (feature.properties['modus_situacion'] !== null ? autolinker.link(feature.properties['modus_situacion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CLUSTER_SIZE'] !== null ? autolinker.link(feature.properties['CLUSTER_SIZE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Clustersmotocicleta2022carpetas_2_0() {
+            return {
+                pane: 'pane_Clustersmotocicleta2022carpetas_2',
+                radius: 3.6,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(180,180,180,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Clustersmotocicleta2022carpetas_2');
+        map.getPane('pane_Clustersmotocicleta2022carpetas_2').style.zIndex = 402;
+        map.getPane('pane_Clustersmotocicleta2022carpetas_2').style['mix-blend-mode'] = 'normal';
+        var layer_Clustersmotocicleta2022carpetas_2 = new L.geoJson(json_Clustersmotocicleta2022carpetas_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Clustersmotocicleta2022carpetas_2',
+            layerName: 'layer_Clustersmotocicleta2022carpetas_2',
+            pane: 'pane_Clustersmotocicleta2022carpetas_2',
+            onEachFeature: pop_Clustersmotocicleta2022carpetas_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Clustersmotocicleta2022carpetas_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Clustersmotocicleta2022carpetas_2);
+        function pop_Robo2023Motocicleta_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id_ap'] !== null ? autolinker.link(feature.properties['id_ap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fecha_de_inicio'] !== null ? autolinker.link(feature.properties['fecha_de_inicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['resumen_ap'] !== null ? autolinker.link(feature.properties['resumen_ap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fecha_de_los_hechos'] !== null ? autolinker.link(feature.properties['fecha_de_los_hechos'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['modus_situacion'] !== null ? autolinker.link(feature.properties['modus_situacion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['mes'] !== null ? autolinker.link(feature.properties['mes'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Fecha_inicio_et'] !== null ? autolinker.link(feature.properties['Fecha_inicio_et'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Robo2023Motocicleta_3_0(feature) {
+            switch(String(feature.properties['mes'])) {
+                case '1':
+                    return {
+                pane: 'pane_Robo2023Motocicleta_3',
+                radius: 2.4,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(173,223,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_Robo2023Motocicleta_3',
+                radius: 2.8,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(65,107,175,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_Robo2023Motocicleta_3',
+                radius: 3.6,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(227,26,28,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Robo2023Motocicleta_3');
+        map.getPane('pane_Robo2023Motocicleta_3').style.zIndex = 403;
+        map.getPane('pane_Robo2023Motocicleta_3').style['mix-blend-mode'] = 'normal';
+        var layer_Robo2023Motocicleta_3 = new L.geoJson(json_Robo2023Motocicleta_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Robo2023Motocicleta_3',
+            layerName: 'layer_Robo2023Motocicleta_3',
+            pane: 'pane_Robo2023Motocicleta_3',
+            onEachFeature: pop_Robo2023Motocicleta_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Robo2023Motocicleta_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Robo2023Motocicleta_3);
+        function pop_Mayordensidad2023motocicleta_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['delegacion'] !== null ? autolinker.link(feature.properties['delegacion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['zona'] !== null ? autolinker.link(feature.properties['zona'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_zona'] !== null ? autolinker.link(feature.properties['cve_zona'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['consec_reg'] !== null ? autolinker.link(feature.properties['consec_reg'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['consec_sec'] !== null ? autolinker.link(feature.properties['consec_sec'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nombre_sec'] !== null ? autolinker.link(feature.properties['nombre_sec'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Mayordensidad2023motocicleta_4_0() {
+            return {
+                pane: 'pane_Mayordensidad2023motocicleta_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,157,157,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Mayordensidad2023motocicleta_4');
+        map.getPane('pane_Mayordensidad2023motocicleta_4').style.zIndex = 404;
+        map.getPane('pane_Mayordensidad2023motocicleta_4').style['mix-blend-mode'] = 'normal';
+        var layer_Mayordensidad2023motocicleta_4 = new L.geoJson(json_Mayordensidad2023motocicleta_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Mayordensidad2023motocicleta_4',
+            layerName: 'layer_Mayordensidad2023motocicleta_4',
+            pane: 'pane_Mayordensidad2023motocicleta_4',
+            onEachFeature: pop_Mayordensidad2023motocicleta_4,
+            style: style_Mayordensidad2023motocicleta_4_0,
+        });
+        bounds_group.addLayer(layer_Mayordensidad2023motocicleta_4);
+        function pop_Mayordensidad2023automvil_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['delegacion'] !== null ? autolinker.link(feature.properties['delegacion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['zona'] !== null ? autolinker.link(feature.properties['zona'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_zona'] !== null ? autolinker.link(feature.properties['cve_zona'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['consec_sec'] !== null ? autolinker.link(feature.properties['consec_sec'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nombre_sec'] !== null ? autolinker.link(feature.properties['nombre_sec'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Mayordensidad2023automvil_5_0() {
+            return {
+                pane: 'pane_Mayordensidad2023automvil_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,157,157,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Mayordensidad2023automvil_5');
+        map.getPane('pane_Mayordensidad2023automvil_5').style.zIndex = 405;
+        map.getPane('pane_Mayordensidad2023automvil_5').style['mix-blend-mode'] = 'normal';
+        var layer_Mayordensidad2023automvil_5 = new L.geoJson(json_Mayordensidad2023automvil_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Mayordensidad2023automvil_5',
+            layerName: 'layer_Mayordensidad2023automvil_5',
+            pane: 'pane_Mayordensidad2023automvil_5',
+            onEachFeature: pop_Mayordensidad2023automvil_5,
+            style: style_Mayordensidad2023automvil_5_0,
+        });
+        bounds_group.addLayer(layer_Mayordensidad2023automvil_5);
+        map.addLayer(layer_Mayordensidad2023automvil_5);
+        function pop_Clusterautomvil2022carpetas_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id_ap'] !== null ? autolinker.link(feature.properties['id_ap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ci_formato_siap_fsiap'] !== null ? autolinker.link(feature.properties['ci_formato_siap_fsiap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>fecha_de_inicio</strong><br />' + (feature.properties['fecha_de_inicio'] !== null ? autolinker.link(feature.properties['fecha_de_inicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>fecha_de_los_hechos</strong><br />' + (feature.properties['fecha_de_los_hechos'] !== null ? autolinker.link(feature.properties['fecha_de_los_hechos'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>modus_situacion</strong><br />' + (feature.properties['modus_situacion'] !== null ? autolinker.link(feature.properties['modus_situacion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CLUSTER_SIZE'] !== null ? autolinker.link(feature.properties['CLUSTER_SIZE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Clusterautomvil2022carpetas_6_0() {
+            return {
+                pane: 'pane_Clusterautomvil2022carpetas_6',
+                radius: 3.6,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(180,180,180,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Clusterautomvil2022carpetas_6');
+        map.getPane('pane_Clusterautomvil2022carpetas_6').style.zIndex = 406;
+        map.getPane('pane_Clusterautomvil2022carpetas_6').style['mix-blend-mode'] = 'normal';
+        var layer_Clusterautomvil2022carpetas_6 = new L.geoJson(json_Clusterautomvil2022carpetas_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Clusterautomvil2022carpetas_6',
+            layerName: 'layer_Clusterautomvil2022carpetas_6',
+            pane: 'pane_Clusterautomvil2022carpetas_6',
+            onEachFeature: pop_Clusterautomvil2022carpetas_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Clusterautomvil2022carpetas_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Clusterautomvil2022carpetas_6);
+        map.addLayer(layer_Clusterautomvil2022carpetas_6);
+        function pop_Clusterdecarpetas2022_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AREA'] !== null ? autolinker.link(feature.properties['AREA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COUNT'] !== null ? autolinker.link(feature.properties['COUNT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Clusterdecarpetas2022_7_0(feature) {
+            if (feature.properties['COUNT'] >= 16.000000 && feature.properties['COUNT'] <= 16.000000 ) {
+                return {
+                pane: 'pane_Clusterdecarpetas2022_7',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(230,230,230,0.4)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['COUNT'] >= 16.000000 && feature.properties['COUNT'] <= 20.000000 ) {
+                return {
+                pane: 'pane_Clusterdecarpetas2022_7',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(170,170,170,0.4)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['COUNT'] >= 20.000000 && feature.properties['COUNT'] <= 26.000000 ) {
+                return {
+                pane: 'pane_Clusterdecarpetas2022_7',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(110,110,110,0.4)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['COUNT'] >= 26.000000 && feature.properties['COUNT'] <= 32.000000 ) {
+                return {
+                pane: 'pane_Clusterdecarpetas2022_7',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(50,50,50,0.4)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Clusterdecarpetas2022_7');
+        map.getPane('pane_Clusterdecarpetas2022_7').style.zIndex = 407;
+        map.getPane('pane_Clusterdecarpetas2022_7').style['mix-blend-mode'] = 'normal';
+        var layer_Clusterdecarpetas2022_7 = new L.geoJson(json_Clusterdecarpetas2022_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Clusterdecarpetas2022_7',
+            layerName: 'layer_Clusterdecarpetas2022_7',
+            pane: 'pane_Clusterdecarpetas2022_7',
+            onEachFeature: pop_Clusterdecarpetas2022_7,
+            style: style_Clusterdecarpetas2022_7_0,
+        });
+        bounds_group.addLayer(layer_Clusterdecarpetas2022_7);
+        function pop_Robo2023automvil_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id_ap'] !== null ? autolinker.link(feature.properties['id_ap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>fecha_de_inicio</strong><br />' + (feature.properties['fecha_de_inicio'] !== null ? autolinker.link(feature.properties['fecha_de_inicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['resumen_ap'] !== null ? autolinker.link(feature.properties['resumen_ap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>fecha_de_los_hechos</strong><br />' + (feature.properties['fecha_de_los_hechos'] !== null ? autolinker.link(feature.properties['fecha_de_los_hechos'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>modus_situacion</strong><br />' + (feature.properties['modus_situacion'] !== null ? autolinker.link(feature.properties['modus_situacion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Mes</strong><br />' + (feature.properties['Mes'] !== null ? autolinker.link(feature.properties['Mes'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Robo2023automvil_8_0(feature) {
+            switch(String(feature.properties['Mes'])) {
+                case '1':
+                    return {
+                pane: 'pane_Robo2023automvil_8',
+                radius: 2.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(173,223,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_Robo2023automvil_8',
+                radius: 2.8,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(65,107,175,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_Robo2023automvil_8',
+                radius: 3.6,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(227,26,28,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Robo2023automvil_8');
+        map.getPane('pane_Robo2023automvil_8').style.zIndex = 408;
+        map.getPane('pane_Robo2023automvil_8').style['mix-blend-mode'] = 'normal';
+        var layer_Robo2023automvil_8 = new L.geoJson(json_Robo2023automvil_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Robo2023automvil_8',
+            layerName: 'layer_Robo2023automvil_8',
+            pane: 'pane_Robo2023automvil_8',
+            onEachFeature: pop_Robo2023automvil_8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Robo2023automvil_8_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Robo2023automvil_8);
+        map.addLayer(layer_Robo2023automvil_8);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Robo 2023 - automóvil<br /><table><tr><td style="text-align: center;"><img src="legend/Robo2023automvil_8_Enero0.png" /></td><td>Enero</td></tr><tr><td style="text-align: center;"><img src="legend/Robo2023automvil_8_Febrero1.png" /></td><td>Febrero</td></tr><tr><td style="text-align: center;"><img src="legend/Robo2023automvil_8_Marzo2.png" /></td><td>Marzo</td></tr></table>': layer_Robo2023automvil_8,'Cluster de carpetas 2022<br /><table><tr><td style="text-align: center;"><img src="legend/Clusterdecarpetas2022_7_16160.png" /></td><td>16 - 16</td></tr><tr><td style="text-align: center;"><img src="legend/Clusterdecarpetas2022_7_16201.png" /></td><td>16 - 20</td></tr><tr><td style="text-align: center;"><img src="legend/Clusterdecarpetas2022_7_20262.png" /></td><td>20 - 26</td></tr><tr><td style="text-align: center;"><img src="legend/Clusterdecarpetas2022_7_26323.png" /></td><td>26 - 32</td></tr></table>': layer_Clusterdecarpetas2022_7,'<img src="legend/Clusterautomvil2022carpetas_6.png" /> Cluster automóvil 2022: carpetas': layer_Clusterautomvil2022carpetas_6,'<img src="legend/Mayordensidad2023automvil_5.png" /> Mayor densidad 2023 - automóvil': layer_Mayordensidad2023automvil_5,'<img src="legend/Mayordensidad2023motocicleta_4.png" /> Mayor densidad 2023 - motocicleta': layer_Mayordensidad2023motocicleta_4,'Robo 2023 - Motocicleta<br /><table><tr><td style="text-align: center;"><img src="legend/Robo2023Motocicleta_3_Enero0.png" /></td><td>Enero</td></tr><tr><td style="text-align: center;"><img src="legend/Robo2023Motocicleta_3_Febrero1.png" /></td><td>Febrero</td></tr><tr><td style="text-align: center;"><img src="legend/Robo2023Motocicleta_3_Marzo2.png" /></td><td>Marzo</td></tr></table>': layer_Robo2023Motocicleta_3,'<img src="legend/Clustersmotocicleta2022carpetas_2.png" /> Clusters motocicleta 2022: carpetas': layer_Clustersmotocicleta2022carpetas_2,'<img src="legend/Lmitealcaldas_1.png" /> Límite alcaldías': layer_Lmitealcaldas_1,"Mapa base": layer_Mapabase_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_Robo2023Motocicleta_3.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Fecha_inicio_et'] !== null?String('<div style="color: #ed5153; font-size: 9pt; font-family: \'Poppins\', sans-serif;">' + layer.feature.properties['Fecha_inicio_et']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Robo2023Motocicleta_3'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_Mayordensidad2023automvil_5.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['nombre_sec'] !== null?String('<div style="color: #323232; font-size: 8pt; font-family: \'Poppins\', sans-serif;">' + layer.feature.properties['nombre_sec']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Mayordensidad2023automvil_5'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_Robo2023Motocicleta_3,layer_Mayordensidad2023automvil_5,layer_Clusterdecarpetas2022_7]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Robo2023Motocicleta_3,layer_Mayordensidad2023automvil_5,layer_Clusterdecarpetas2022_7]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Robo2023Motocicleta_3,layer_Mayordensidad2023automvil_5,layer_Clusterdecarpetas2022_7]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Robo2023Motocicleta_3,layer_Mayordensidad2023automvil_5,layer_Clusterdecarpetas2022_7]);
+        });
+        </script>
+    </body>
+</html>
