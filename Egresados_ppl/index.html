@@ -1128,32 +1128,6 @@
         var baseMaps = {};
         L.control.layers(baseMaps,{'<img src="legend/Lmitealcaldas_13.png" /> Límite alcaldías': layer_Lmitealcaldas_13,'<img src="legend/Totaldeegresados_12.png" /> Total de egresados ': layer_Totaldeegresados_12,'<img src="legend/Totaldeegresadosmayora20_11.png" /> Total de egresados mayor a 20': layer_Totaldeegresadosmayora20_11,'<img src="legend/Egresadospordelitosdegenero_10.png" /> Egresados por delitos de genero': layer_Egresadospordelitosdegenero_10,'<img src="legend/Egresadospordelitosdegenero5_9.png" /> Egresados por delitos de genero > 5': layer_Egresadospordelitosdegenero5_9,'<img src="legend/Egresadospordelitodehomicidio_8.png" /> Egresados por delito de homicidio': layer_Egresadospordelitodehomicidio_8,'<img src="legend/Egresadospordelitodedaoalaintegridadfsica_7.png" /> Egresados por delito de daño a la integridad física': layer_Egresadospordelitodedaoalaintegridadfsica_7,'<img src="legend/Egresadospordelitopatrimonialconviolencia_6.png" /> Egresados por delito patrimonial con violencia': layer_Egresadospordelitopatrimonialconviolencia_6,'<img src="legend/Egresadospordelitopatrimonial_5.png" /> Egresados por delito patrimonial': layer_Egresadospordelitopatrimonial_5,'<img src="legend/Egresadospordelitoscontralasalud_4.png" /> Egresados por delitos contra la salud': layer_Egresadospordelitoscontralasalud_4,'<img src="legend/Egresadospordelitosdebajoimpacto_3.png" /> Egresados por delitos de bajo impacto': layer_Egresadospordelitosdebajoimpacto_3,'<img src="legend/Egresadospordelitosdelesiones_2.png" /> Egresados por delitos de lesiones': layer_Egresadospordelitosdelesiones_2,'<img src="legend/Lmitecolonias_1.png" /> Límite colonias': layer_Lmitecolonias_1,"Mapa base": layer_Mapabase_0,},{collapsed:false}).addTo(map);
         setBounds();
-        var i = 0;
-        layer_Lmitecolonias_1.eachLayer(function(layer) {
-            var context = {
-                feature: layer.feature,
-                variables: {}
-            };
-            layer.bindTooltip((layer.feature.properties['NOMUT'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Poppins\', sans-serif;">' + layer.feature.properties['NOMUT']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Lmitecolonias_1'});
-            labels.push(layer);
-            totalMarkers += 1;
-              layer.added = true;
-              addLabel(layer, i);
-              i++;
-        });
-        var i = 0;
-        layer_Totaldeegresados_12.eachLayer(function(layer) {
-            var context = {
-                feature: layer.feature,
-                variables: {}
-            };
-            layer.bindTooltip((layer.feature.properties['NOMDT'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['NOMDT']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Totaldeegresados_12'});
-            labels.push(layer);
-            totalMarkers += 1;
-              layer.added = true;
-              addLabel(layer, i);
-              i++;
-        });
         resetLabels([layer_Lmitecolonias_1,layer_Totaldeegresados_12]);
         map.on("zoomend", function(){
             resetLabels([layer_Lmitecolonias_1,layer_Totaldeegresados_12]);
