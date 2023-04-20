@@ -1,0 +1,1108 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Patrimonialconviolencia_1.js"></script>
+        <script src="data/Patrimonial_2.js"></script>
+        <script src="data/Lesiones_3.js"></script>
+        <script src="data/Contralasalud_4.js"></script>
+        <script src="data/Bajoimpacto_5.js"></script>
+        <script src="data/Homicidio_6.js"></script>
+        <script src="data/Degnero_7.js"></script>
+        <script src="data/Contralaintegridadfsica_8.js"></script>
+        <script src="data/PPLTotaldeegresosporcolonia_9.js"></script>
+        <script src="data/Colonias_10.js"></script>
+        <script src="data/Lmitealcaldas_11.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.034596959503506,-99.6856795695058],[19.607464380319026,-98.61954744549402]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Mapabase_0');
+        map.getPane('pane_Mapabase_0').style.zIndex = 400;
+        var layer_Mapabase_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            pane: 'pane_Mapabase_0',
+            opacity: 0.6,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Mapabase_0;
+        function pop_Patrimonialconviolencia_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PATRIMONIAL CON VIOLENCIA</th>\
+                        <td>' + (feature.properties['PATRIMONIAL CON VIOLENCIA'] !== null ? autolinker.link(feature.properties['PATRIMONIAL CON VIOLENCIA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Patrimonialconviolencia_1_0(feature) {
+            if (feature.properties['PATRIMONIAL CON VIOLENCIA'] >= 1.000000 && feature.properties['PATRIMONIAL CON VIOLENCIA'] <= 26.000000 ) {
+                return {
+                pane: 'pane_Patrimonialconviolencia_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,253,191,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PATRIMONIAL CON VIOLENCIA'] >= 26.000000 && feature.properties['PATRIMONIAL CON VIOLENCIA'] <= 86.000000 ) {
+                return {
+                pane: 'pane_Patrimonialconviolencia_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,96,93,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PATRIMONIAL CON VIOLENCIA'] >= 86.000000 && feature.properties['PATRIMONIAL CON VIOLENCIA'] <= 221.000000 ) {
+                return {
+                pane: 'pane_Patrimonialconviolencia_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(114,31,129,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PATRIMONIAL CON VIOLENCIA'] >= 221.000000 && feature.properties['PATRIMONIAL CON VIOLENCIA'] <= 450.000000 ) {
+                return {
+                pane: 'pane_Patrimonialconviolencia_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,4,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Patrimonialconviolencia_1');
+        map.getPane('pane_Patrimonialconviolencia_1').style.zIndex = 401;
+        map.getPane('pane_Patrimonialconviolencia_1').style['mix-blend-mode'] = 'normal';
+        var layer_Patrimonialconviolencia_1 = new L.geoJson(json_Patrimonialconviolencia_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Patrimonialconviolencia_1',
+            layerName: 'layer_Patrimonialconviolencia_1',
+            pane: 'pane_Patrimonialconviolencia_1',
+            onEachFeature: pop_Patrimonialconviolencia_1,
+            style: style_Patrimonialconviolencia_1_0,
+        });
+        bounds_group.addLayer(layer_Patrimonialconviolencia_1);
+        function pop_Patrimonial_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PATRIMONIAL</th>\
+                        <td>' + (feature.properties['PATRIMONIAL'] !== null ? autolinker.link(feature.properties['PATRIMONIAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Patrimonial_2_0(feature) {
+            if (feature.properties['PATRIMONIAL'] >= 1.000000 && feature.properties['PATRIMONIAL'] <= 18.000000 ) {
+                return {
+                pane: 'pane_Patrimonial_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,245,240,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PATRIMONIAL'] >= 18.000000 && feature.properties['PATRIMONIAL'] <= 66.000000 ) {
+                return {
+                pane: 'pane_Patrimonial_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,164,134,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PATRIMONIAL'] >= 66.000000 && feature.properties['PATRIMONIAL'] <= 183.000000 ) {
+                return {
+                pane: 'pane_Patrimonial_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(234,55,42,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['PATRIMONIAL'] >= 183.000000 && feature.properties['PATRIMONIAL'] <= 420.000000 ) {
+                return {
+                pane: 'pane_Patrimonial_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(103,0,13,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Patrimonial_2');
+        map.getPane('pane_Patrimonial_2').style.zIndex = 402;
+        map.getPane('pane_Patrimonial_2').style['mix-blend-mode'] = 'normal';
+        var layer_Patrimonial_2 = new L.geoJson(json_Patrimonial_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Patrimonial_2',
+            layerName: 'layer_Patrimonial_2',
+            pane: 'pane_Patrimonial_2',
+            onEachFeature: pop_Patrimonial_2,
+            style: style_Patrimonial_2_0,
+        });
+        bounds_group.addLayer(layer_Patrimonial_2);
+        function pop_Lesiones_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LESIONES</th>\
+                        <td>' + (feature.properties['LESIONES'] !== null ? autolinker.link(feature.properties['LESIONES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lesiones_3_0(feature) {
+            if (feature.properties['LESIONES'] >= 1.000000 && feature.properties['LESIONES'] <= 2.000000 ) {
+                return {
+                pane: 'pane_Lesiones_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,238,246,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['LESIONES'] >= 2.000000 && feature.properties['LESIONES'] <= 5.000000 ) {
+                return {
+                pane: 'pane_Lesiones_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(218,154,203,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['LESIONES'] >= 5.000000 && feature.properties['LESIONES'] <= 12.000000 ) {
+                return {
+                pane: 'pane_Lesiones_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(222,52,138,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['LESIONES'] >= 12.000000 && feature.properties['LESIONES'] <= 21.000000 ) {
+                return {
+                pane: 'pane_Lesiones_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,0,67,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Lesiones_3');
+        map.getPane('pane_Lesiones_3').style.zIndex = 403;
+        map.getPane('pane_Lesiones_3').style['mix-blend-mode'] = 'normal';
+        var layer_Lesiones_3 = new L.geoJson(json_Lesiones_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Lesiones_3',
+            layerName: 'layer_Lesiones_3',
+            pane: 'pane_Lesiones_3',
+            onEachFeature: pop_Lesiones_3,
+            style: style_Lesiones_3_0,
+        });
+        bounds_group.addLayer(layer_Lesiones_3);
+        function pop_Contralasalud_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CONTRA LA SALUD</th>\
+                        <td>' + (feature.properties['CONTRA LA SALUD'] !== null ? autolinker.link(feature.properties['CONTRA LA SALUD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Contralasalud_4_0(feature) {
+            if (feature.properties['CONTRA LA SALUD'] >= 1.000000 && feature.properties['CONTRA LA SALUD'] <= 10.000000 ) {
+                return {
+                pane: 'pane_Contralasalud_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,252,245,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['CONTRA LA SALUD'] >= 10.000000 && feature.properties['CONTRA LA SALUD'] <= 30.000000 ) {
+                return {
+                pane: 'pane_Contralasalud_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(178,224,171,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['CONTRA LA SALUD'] >= 30.000000 && feature.properties['CONTRA LA SALUD'] <= 79.000000 ) {
+                return {
+                pane: 'pane_Contralasalud_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(61,167,90,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['CONTRA LA SALUD'] >= 79.000000 && feature.properties['CONTRA LA SALUD'] <= 160.000000 ) {
+                return {
+                pane: 'pane_Contralasalud_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,68,27,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Contralasalud_4');
+        map.getPane('pane_Contralasalud_4').style.zIndex = 404;
+        map.getPane('pane_Contralasalud_4').style['mix-blend-mode'] = 'normal';
+        var layer_Contralasalud_4 = new L.geoJson(json_Contralasalud_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Contralasalud_4',
+            layerName: 'layer_Contralasalud_4',
+            pane: 'pane_Contralasalud_4',
+            onEachFeature: pop_Contralasalud_4,
+            style: style_Contralasalud_4_0,
+        });
+        bounds_group.addLayer(layer_Contralasalud_4);
+        function pop_Bajoimpacto_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BAJO IMPACTO</th>\
+                        <td>' + (feature.properties['BAJO IMPACTO'] !== null ? autolinker.link(feature.properties['BAJO IMPACTO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Bajoimpacto_5_0(feature) {
+            if (feature.properties['BAJO IMPACTO'] >= 1.000000 && feature.properties['BAJO IMPACTO'] <= 4.000000 ) {
+                return {
+                pane: 'pane_Bajoimpacto_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,251,255,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['BAJO IMPACTO'] >= 4.000000 && feature.properties['BAJO IMPACTO'] <= 13.000000 ) {
+                return {
+                pane: 'pane_Bajoimpacto_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(175,209,231,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['BAJO IMPACTO'] >= 13.000000 && feature.properties['BAJO IMPACTO'] <= 36.000000 ) {
+                return {
+                pane: 'pane_Bajoimpacto_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(62,142,196,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['BAJO IMPACTO'] >= 36.000000 && feature.properties['BAJO IMPACTO'] <= 101.000000 ) {
+                return {
+                pane: 'pane_Bajoimpacto_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(8,48,107,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Bajoimpacto_5');
+        map.getPane('pane_Bajoimpacto_5').style.zIndex = 405;
+        map.getPane('pane_Bajoimpacto_5').style['mix-blend-mode'] = 'normal';
+        var layer_Bajoimpacto_5 = new L.geoJson(json_Bajoimpacto_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Bajoimpacto_5',
+            layerName: 'layer_Bajoimpacto_5',
+            pane: 'pane_Bajoimpacto_5',
+            onEachFeature: pop_Bajoimpacto_5,
+            style: style_Bajoimpacto_5_0,
+        });
+        bounds_group.addLayer(layer_Bajoimpacto_5);
+        function pop_Homicidio_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">HOMICIDIO</th>\
+                        <td>' + (feature.properties['HOMICIDIO'] !== null ? autolinker.link(feature.properties['HOMICIDIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Homicidio_6_0(feature) {
+            if (feature.properties['HOMICIDIO'] >= 1.000000 && feature.properties['HOMICIDIO'] <= 3.000000 ) {
+                return {
+                pane: 'pane_Homicidio_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(250,250,250,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['HOMICIDIO'] >= 3.000000 && feature.properties['HOMICIDIO'] <= 9.000000 ) {
+                return {
+                pane: 'pane_Homicidio_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(168,168,168,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['HOMICIDIO'] >= 9.000000 && feature.properties['HOMICIDIO'] <= 21.000000 ) {
+                return {
+                pane: 'pane_Homicidio_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(87,87,87,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['HOMICIDIO'] >= 21.000000 && feature.properties['HOMICIDIO'] <= 38.000000 ) {
+                return {
+                pane: 'pane_Homicidio_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(5,5,5,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Homicidio_6');
+        map.getPane('pane_Homicidio_6').style.zIndex = 406;
+        map.getPane('pane_Homicidio_6').style['mix-blend-mode'] = 'normal';
+        var layer_Homicidio_6 = new L.geoJson(json_Homicidio_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Homicidio_6',
+            layerName: 'layer_Homicidio_6',
+            pane: 'pane_Homicidio_6',
+            onEachFeature: pop_Homicidio_6,
+            style: style_Homicidio_6_0,
+        });
+        bounds_group.addLayer(layer_Homicidio_6);
+        function pop_Degnero_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GENERO</th>\
+                        <td>' + (feature.properties['GENERO'] !== null ? autolinker.link(feature.properties['GENERO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Degnero_7_0(feature) {
+            if (feature.properties['GENERO'] >= 1.000000 && feature.properties['GENERO'] <= 5.000000 ) {
+                return {
+                pane: 'pane_Degnero_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,251,253,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['GENERO'] >= 5.000000 && feature.properties['GENERO'] <= 13.000000 ) {
+                return {
+                pane: 'pane_Degnero_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,202,227,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['GENERO'] >= 13.000000 && feature.properties['GENERO'] <= 30.000000 ) {
+                return {
+                pane: 'pane_Degnero_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(124,118,182,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['GENERO'] >= 30.000000 && feature.properties['GENERO'] <= 74.000000 ) {
+                return {
+                pane: 'pane_Degnero_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(63,0,125,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Degnero_7');
+        map.getPane('pane_Degnero_7').style.zIndex = 407;
+        map.getPane('pane_Degnero_7').style['mix-blend-mode'] = 'normal';
+        var layer_Degnero_7 = new L.geoJson(json_Degnero_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Degnero_7',
+            layerName: 'layer_Degnero_7',
+            pane: 'pane_Degnero_7',
+            onEachFeature: pop_Degnero_7,
+            style: style_Degnero_7_0,
+        });
+        bounds_group.addLayer(layer_Degnero_7);
+        function pop_Contralaintegridadfsica_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CONTRA LA INTEGRIAD FISICA</th>\
+                        <td>' + (feature.properties['CONTRA LA INTEGRIAD FISICA'] !== null ? autolinker.link(feature.properties['CONTRA LA INTEGRIAD FISICA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Contralaintegridadfsica_8_0(feature) {
+            if (feature.properties['CONTRA LA INTEGRIAD FISICA'] >= 1.000000 && feature.properties['CONTRA LA INTEGRIAD FISICA'] <= 4.000000 ) {
+                return {
+                pane: 'pane_Contralaintegridadfsica_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,204,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['CONTRA LA INTEGRIAD FISICA'] >= 4.000000 && feature.properties['CONTRA LA INTEGRIAD FISICA'] <= 12.000000 ) {
+                return {
+                pane: 'pane_Contralaintegridadfsica_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(129,206,185,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['CONTRA LA INTEGRIAD FISICA'] >= 12.000000 && feature.properties['CONTRA LA INTEGRIAD FISICA'] <= 28.000000 ) {
+                return {
+                pane: 'pane_Contralaintegridadfsica_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(51,145,188,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['CONTRA LA INTEGRIAD FISICA'] >= 28.000000 && feature.properties['CONTRA LA INTEGRIAD FISICA'] <= 56.000000 ) {
+                return {
+                pane: 'pane_Contralaintegridadfsica_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(37,52,148,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Contralaintegridadfsica_8');
+        map.getPane('pane_Contralaintegridadfsica_8').style.zIndex = 408;
+        map.getPane('pane_Contralaintegridadfsica_8').style['mix-blend-mode'] = 'normal';
+        var layer_Contralaintegridadfsica_8 = new L.geoJson(json_Contralaintegridadfsica_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Contralaintegridadfsica_8',
+            layerName: 'layer_Contralaintegridadfsica_8',
+            pane: 'pane_Contralaintegridadfsica_8',
+            onEachFeature: pop_Contralaintegridadfsica_8,
+            style: style_Contralaintegridadfsica_8_0,
+        });
+        bounds_group.addLayer(layer_Contralaintegridadfsica_8);
+        function pop_PPLTotaldeegresosporcolonia_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TOT_EGR</th>\
+                        <td>' + (feature.properties['TOT_EGR'] !== null ? autolinker.link(feature.properties['TOT_EGR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PPLTotaldeegresosporcolonia_9_0(feature) {
+            if (feature.properties['TOT_EGR'] >= 1.000000 && feature.properties['TOT_EGR'] <= 34.000000 ) {
+                return {
+                pane: 'pane_PPLTotaldeegresosporcolonia_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(250,235,221,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['TOT_EGR'] >= 34.000000 && feature.properties['TOT_EGR'] <= 97.000000 ) {
+                return {
+                pane: 'pane_PPLTotaldeegresosporcolonia_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,136,96,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['TOT_EGR'] >= 97.000000 && feature.properties['TOT_EGR'] <= 225.000000 ) {
+                return {
+                pane: 'pane_PPLTotaldeegresosporcolonia_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(203,27,79,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['TOT_EGR'] >= 225.000000 && feature.properties['TOT_EGR'] <= 585.000000 ) {
+                return {
+                pane: 'pane_PPLTotaldeegresosporcolonia_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(97,31,83,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['TOT_EGR'] >= 585.000000 && feature.properties['TOT_EGR'] <= 1252.000000 ) {
+                return {
+                pane: 'pane_PPLTotaldeegresosporcolonia_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(3,5,26,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_PPLTotaldeegresosporcolonia_9');
+        map.getPane('pane_PPLTotaldeegresosporcolonia_9').style.zIndex = 409;
+        map.getPane('pane_PPLTotaldeegresosporcolonia_9').style['mix-blend-mode'] = 'normal';
+        var layer_PPLTotaldeegresosporcolonia_9 = new L.geoJson(json_PPLTotaldeegresosporcolonia_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PPLTotaldeegresosporcolonia_9',
+            layerName: 'layer_PPLTotaldeegresosporcolonia_9',
+            pane: 'pane_PPLTotaldeegresosporcolonia_9',
+            onEachFeature: pop_PPLTotaldeegresosporcolonia_9,
+            style: style_PPLTotaldeegresosporcolonia_9_0,
+        });
+        bounds_group.addLayer(layer_PPLTotaldeegresosporcolonia_9);
+        map.addLayer(layer_PPLTotaldeegresosporcolonia_9);
+        function pop_Colonias_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Colonias_10_0() {
+            return {
+                pane: 'pane_Colonias_10',
+                opacity: 1,
+                color: 'rgba(215,215,215,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,166,178,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Colonias_10');
+        map.getPane('pane_Colonias_10').style.zIndex = 410;
+        map.getPane('pane_Colonias_10').style['mix-blend-mode'] = 'normal';
+        var layer_Colonias_10 = new L.geoJson(json_Colonias_10, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Colonias_10',
+            layerName: 'layer_Colonias_10',
+            pane: 'pane_Colonias_10',
+            onEachFeature: pop_Colonias_10,
+            style: style_Colonias_10_0,
+        });
+        bounds_group.addLayer(layer_Colonias_10);
+        map.addLayer(layer_Colonias_10);
+        function pop_Lmitealcaldas_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['X_id'] !== null ? autolinker.link(feature.properties['X_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_ent'] !== null ? autolinker.link(feature.properties['cve_ent'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cvegeo'] !== null ? autolinker.link(feature.properties['cvegeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['g_pnt_2'] !== null ? autolinker.link(feature.properties['g_pnt_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geo_shp'] !== null ? autolinker.link(feature.properties['geo_shp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['municip'] !== null ? autolinker.link(feature.properties['municip'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Mujeco'] !== null ? autolinker.link(feature.properties['Mujeco'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lmitealcaldas_11_0() {
+            return {
+                pane: 'pane_Lmitealcaldas_11',
+                opacity: 1,
+                color: 'rgba(175,175,175,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,113,141,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Lmitealcaldas_11');
+        map.getPane('pane_Lmitealcaldas_11').style.zIndex = 411;
+        map.getPane('pane_Lmitealcaldas_11').style['mix-blend-mode'] = 'normal';
+        var layer_Lmitealcaldas_11 = new L.geoJson(json_Lmitealcaldas_11, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Lmitealcaldas_11',
+            layerName: 'layer_Lmitealcaldas_11',
+            pane: 'pane_Lmitealcaldas_11',
+            onEachFeature: pop_Lmitealcaldas_11,
+            style: style_Lmitealcaldas_11_0,
+        });
+        bounds_group.addLayer(layer_Lmitealcaldas_11);
+        map.addLayer(layer_Lmitealcaldas_11);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Lmitealcaldas_11.png" /> Límite alcaldías': layer_Lmitealcaldas_11,'<img src="legend/Colonias_10.png" /> Colonias': layer_Colonias_10,'PPL - Total de egresos por colonia<br /><table><tr><td style="text-align: center;"><img src="legend/PPLTotaldeegresosporcolonia_9_1340.png" /></td><td>1 - 34</td></tr><tr><td style="text-align: center;"><img src="legend/PPLTotaldeegresosporcolonia_9_34971.png" /></td><td>34 - 97</td></tr><tr><td style="text-align: center;"><img src="legend/PPLTotaldeegresosporcolonia_9_972252.png" /></td><td>97 - 225</td></tr><tr><td style="text-align: center;"><img src="legend/PPLTotaldeegresosporcolonia_9_2255853.png" /></td><td>225 - 585</td></tr><tr><td style="text-align: center;"><img src="legend/PPLTotaldeegresosporcolonia_9_58512524.png" /></td><td>585 - 1252</td></tr></table>': layer_PPLTotaldeegresosporcolonia_9,'Contra la integridad física<br /><table><tr><td style="text-align: center;"><img src="legend/Contralaintegridadfsica_8_140.png" /></td><td>1 - 4</td></tr><tr><td style="text-align: center;"><img src="legend/Contralaintegridadfsica_8_4121.png" /></td><td>4 - 12</td></tr><tr><td style="text-align: center;"><img src="legend/Contralaintegridadfsica_8_12282.png" /></td><td>12 - 28</td></tr><tr><td style="text-align: center;"><img src="legend/Contralaintegridadfsica_8_28563.png" /></td><td>28 - 56</td></tr></table>': layer_Contralaintegridadfsica_8,'De género<br /><table><tr><td style="text-align: center;"><img src="legend/Degnero_7_150.png" /></td><td>1 - 5</td></tr><tr><td style="text-align: center;"><img src="legend/Degnero_7_5131.png" /></td><td>5 - 13</td></tr><tr><td style="text-align: center;"><img src="legend/Degnero_7_13302.png" /></td><td>13 - 30</td></tr><tr><td style="text-align: center;"><img src="legend/Degnero_7_30743.png" /></td><td>30 - 74</td></tr></table>': layer_Degnero_7,'Homicidio<br /><table><tr><td style="text-align: center;"><img src="legend/Homicidio_6_130.png" /></td><td>1 - 3</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidio_6_391.png" /></td><td>3 - 9</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidio_6_9212.png" /></td><td>9 - 21</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidio_6_21383.png" /></td><td>21 - 38</td></tr></table>': layer_Homicidio_6,'Bajo impacto<br /><table><tr><td style="text-align: center;"><img src="legend/Bajoimpacto_5_140.png" /></td><td>1 - 4</td></tr><tr><td style="text-align: center;"><img src="legend/Bajoimpacto_5_4131.png" /></td><td>4 - 13</td></tr><tr><td style="text-align: center;"><img src="legend/Bajoimpacto_5_13362.png" /></td><td>13 - 36</td></tr><tr><td style="text-align: center;"><img src="legend/Bajoimpacto_5_361013.png" /></td><td>36 - 101</td></tr></table>': layer_Bajoimpacto_5,'Contra la salud<br /><table><tr><td style="text-align: center;"><img src="legend/Contralasalud_4_1100.png" /></td><td>1 - 10</td></tr><tr><td style="text-align: center;"><img src="legend/Contralasalud_4_10301.png" /></td><td>10 - 30</td></tr><tr><td style="text-align: center;"><img src="legend/Contralasalud_4_30792.png" /></td><td>30 - 79</td></tr><tr><td style="text-align: center;"><img src="legend/Contralasalud_4_791603.png" /></td><td>79 - 160</td></tr></table>': layer_Contralasalud_4,'Lesiones<br /><table><tr><td style="text-align: center;"><img src="legend/Lesiones_3_120.png" /></td><td>1 - 2</td></tr><tr><td style="text-align: center;"><img src="legend/Lesiones_3_251.png" /></td><td>2 - 5</td></tr><tr><td style="text-align: center;"><img src="legend/Lesiones_3_5122.png" /></td><td>5 - 12</td></tr><tr><td style="text-align: center;"><img src="legend/Lesiones_3_12213.png" /></td><td>12 - 21</td></tr></table>': layer_Lesiones_3,'Patrimonial<br /><table><tr><td style="text-align: center;"><img src="legend/Patrimonial_2_1180.png" /></td><td>1 - 18</td></tr><tr><td style="text-align: center;"><img src="legend/Patrimonial_2_18661.png" /></td><td>18 - 66</td></tr><tr><td style="text-align: center;"><img src="legend/Patrimonial_2_661832.png" /></td><td>66 - 183</td></tr><tr><td style="text-align: center;"><img src="legend/Patrimonial_2_1834203.png" /></td><td>183 - 420</td></tr></table>': layer_Patrimonial_2,'Patrimonial con violencia<br /><table><tr><td style="text-align: center;"><img src="legend/Patrimonialconviolencia_1_1260.png" /></td><td>1 - 26</td></tr><tr><td style="text-align: center;"><img src="legend/Patrimonialconviolencia_1_26861.png" /></td><td>26 - 86</td></tr><tr><td style="text-align: center;"><img src="legend/Patrimonialconviolencia_1_862212.png" /></td><td>86 - 221</td></tr><tr><td style="text-align: center;"><img src="legend/Patrimonialconviolencia_1_2214503.png" /></td><td>221 - 450</td></tr></table>': layer_Patrimonialconviolencia_1,"Mapa base": layer_Mapabase_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
