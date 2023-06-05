@@ -30,9 +30,9 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="data/Lmitemunicipal_2.js"></script>
-        <script src="data/GanadorasPREPpormunicipio_3.js"></script>
-        <script src="data/HoraDato915DaDato05062023_4.js"></script>
+        <script src="data/Lmitemunicipal_3.js"></script>
+        <script src="data/GanadorasPREPpormunicipio_4.js"></script>
+        <script src="data/HoraDato915DaDato05062023_5.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
@@ -55,10 +55,24 @@
             maxNativeZoom: 20
         });
         layer_GoogleRoad_0;
-        map.createPane('pane_Positron_1');
-        map.getPane('pane_Positron_1').style.zIndex = 401;
-        var layer_Positron_1 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-            pane: 'pane_Positron_1',
+        map.addLayer(layer_GoogleRoad_0);
+        map.createPane('pane_GoogleTerrain_1');
+        map.getPane('pane_GoogleTerrain_1').style.zIndex = 401;
+        var layer_GoogleTerrain_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleTerrain_1',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleTerrain_1;
+        map.addLayer(layer_GoogleTerrain_1);
+        map.createPane('pane_Positron_2');
+        map.getPane('pane_Positron_2').style.zIndex = 402;
+        var layer_Positron_2 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Positron_2',
             opacity: 1.0,
             attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
             minZoom: 1,
@@ -66,8 +80,8 @@
             minNativeZoom: 0,
             maxNativeZoom: 20
         });
-        layer_Positron_1;
-        function pop_Lmitemunicipal_2(feature, layer) {
+        layer_Positron_2;
+        function pop_Lmitemunicipal_3(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['CVEGEO'] !== null ? autolinker.link(feature.properties['CVEGEO'].toLocaleString()) : '') + '</td>\
@@ -85,9 +99,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Lmitemunicipal_2_0() {
+        function style_Lmitemunicipal_3_0() {
             return {
-                pane: 'pane_Lmitemunicipal_2',
+                pane: 'pane_Lmitemunicipal_3',
                 opacity: 1,
                 color: 'rgba(97,97,97,1.0)',
                 dashArray: '',
@@ -100,21 +114,21 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Lmitemunicipal_2');
-        map.getPane('pane_Lmitemunicipal_2').style.zIndex = 402;
-        map.getPane('pane_Lmitemunicipal_2').style['mix-blend-mode'] = 'normal';
-        var layer_Lmitemunicipal_2 = new L.geoJson(json_Lmitemunicipal_2, {
+        map.createPane('pane_Lmitemunicipal_3');
+        map.getPane('pane_Lmitemunicipal_3').style.zIndex = 403;
+        map.getPane('pane_Lmitemunicipal_3').style['mix-blend-mode'] = 'normal';
+        var layer_Lmitemunicipal_3 = new L.geoJson(json_Lmitemunicipal_3, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Lmitemunicipal_2',
-            layerName: 'layer_Lmitemunicipal_2',
-            pane: 'pane_Lmitemunicipal_2',
-            onEachFeature: pop_Lmitemunicipal_2,
-            style: style_Lmitemunicipal_2_0,
+            dataVar: 'json_Lmitemunicipal_3',
+            layerName: 'layer_Lmitemunicipal_3',
+            pane: 'pane_Lmitemunicipal_3',
+            onEachFeature: pop_Lmitemunicipal_3,
+            style: style_Lmitemunicipal_3_0,
         });
-        bounds_group.addLayer(layer_Lmitemunicipal_2);
-        map.addLayer(layer_Lmitemunicipal_2);
-        function pop_GanadorasPREPpormunicipio_3(feature, layer) {
+        bounds_group.addLayer(layer_Lmitemunicipal_3);
+        map.addLayer(layer_Lmitemunicipal_3);
+        function pop_GanadorasPREPpormunicipio_4(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">CVEGEO</th>\
@@ -164,11 +178,11 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_GanadorasPREPpormunicipio_3_0(feature) {
+        function style_GanadorasPREPpormunicipio_4_0(feature) {
             switch(String(feature.properties['gana'])) {
                 case 'alejandra':
                     return {
-                pane: 'pane_GanadorasPREPpormunicipio_3',
+                pane: 'pane_GanadorasPREPpormunicipio_4',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.0)',
                 dashArray: '',
@@ -183,7 +197,7 @@
                     break;
                 case 'delfina':
                     return {
-                pane: 'pane_GanadorasPREPpormunicipio_3',
+                pane: 'pane_GanadorasPREPpormunicipio_4',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.0)',
                 dashArray: '',
@@ -198,21 +212,21 @@
                     break;
             }
         }
-        map.createPane('pane_GanadorasPREPpormunicipio_3');
-        map.getPane('pane_GanadorasPREPpormunicipio_3').style.zIndex = 403;
-        map.getPane('pane_GanadorasPREPpormunicipio_3').style['mix-blend-mode'] = 'normal';
-        var layer_GanadorasPREPpormunicipio_3 = new L.geoJson(json_GanadorasPREPpormunicipio_3, {
+        map.createPane('pane_GanadorasPREPpormunicipio_4');
+        map.getPane('pane_GanadorasPREPpormunicipio_4').style.zIndex = 404;
+        map.getPane('pane_GanadorasPREPpormunicipio_4').style['mix-blend-mode'] = 'normal';
+        var layer_GanadorasPREPpormunicipio_4 = new L.geoJson(json_GanadorasPREPpormunicipio_4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_GanadorasPREPpormunicipio_3',
-            layerName: 'layer_GanadorasPREPpormunicipio_3',
-            pane: 'pane_GanadorasPREPpormunicipio_3',
-            onEachFeature: pop_GanadorasPREPpormunicipio_3,
-            style: style_GanadorasPREPpormunicipio_3_0,
+            dataVar: 'json_GanadorasPREPpormunicipio_4',
+            layerName: 'layer_GanadorasPREPpormunicipio_4',
+            pane: 'pane_GanadorasPREPpormunicipio_4',
+            onEachFeature: pop_GanadorasPREPpormunicipio_4,
+            style: style_GanadorasPREPpormunicipio_4_0,
         });
-        bounds_group.addLayer(layer_GanadorasPREPpormunicipio_3);
-        map.addLayer(layer_GanadorasPREPpormunicipio_3);
-        function pop_HoraDato915DaDato05062023_4(feature, layer) {
+        bounds_group.addLayer(layer_GanadorasPREPpormunicipio_4);
+        map.addLayer(layer_GanadorasPREPpormunicipio_4);
+        function pop_HoraDato915DaDato05062023_5(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
@@ -227,9 +241,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_HoraDato915DaDato05062023_4_0() {
+        function style_HoraDato915DaDato05062023_5_0() {
             return {
-                pane: 'pane_HoraDato915DaDato05062023_4',
+                pane: 'pane_HoraDato915DaDato05062023_5',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,0.0)',
@@ -243,51 +257,51 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_HoraDato915DaDato05062023_4');
-        map.getPane('pane_HoraDato915DaDato05062023_4').style.zIndex = 404;
-        map.getPane('pane_HoraDato915DaDato05062023_4').style['mix-blend-mode'] = 'normal';
-        var layer_HoraDato915DaDato05062023_4 = new L.geoJson(json_HoraDato915DaDato05062023_4, {
+        map.createPane('pane_HoraDato915DaDato05062023_5');
+        map.getPane('pane_HoraDato915DaDato05062023_5').style.zIndex = 405;
+        map.getPane('pane_HoraDato915DaDato05062023_5').style['mix-blend-mode'] = 'normal';
+        var layer_HoraDato915DaDato05062023_5 = new L.geoJson(json_HoraDato915DaDato05062023_5, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_HoraDato915DaDato05062023_4',
-            layerName: 'layer_HoraDato915DaDato05062023_4',
-            pane: 'pane_HoraDato915DaDato05062023_4',
-            onEachFeature: pop_HoraDato915DaDato05062023_4,
+            dataVar: 'json_HoraDato915DaDato05062023_5',
+            layerName: 'layer_HoraDato915DaDato05062023_5',
+            pane: 'pane_HoraDato915DaDato05062023_5',
+            onEachFeature: pop_HoraDato915DaDato05062023_5,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_HoraDato915DaDato05062023_4_0(feature));
+                return L.circleMarker(latlng, style_HoraDato915DaDato05062023_5_0(feature));
             },
         });
-        bounds_group.addLayer(layer_HoraDato915DaDato05062023_4);
-        map.addLayer(layer_HoraDato915DaDato05062023_4);
+        bounds_group.addLayer(layer_HoraDato915DaDato05062023_5);
+        map.addLayer(layer_HoraDato915DaDato05062023_5);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/HoraDato915DaDato05062023_4.png" /> Hora Dato: 9:15; Día Dato: 05/06/2023': layer_HoraDato915DaDato05062023_4,'Ganadoras PREP por municipio-<br /><table><tr><td style="text-align: center;"><img src="legend/GanadorasPREPpormunicipio_3_AlejandraDelMoral0.png" /></td><td>Alejandra Del Moral</td></tr><tr><td style="text-align: center;"><img src="legend/GanadorasPREPpormunicipio_3_DelfinaGómezÁlvarez1.png" /></td><td>Delfina Gómez Álvarez</td></tr></table>': layer_GanadorasPREPpormunicipio_3,'<img src="legend/Lmitemunicipal_2.png" /> Límite municipal': layer_Lmitemunicipal_2,"Positron": layer_Positron_1,"Google Road": layer_GoogleRoad_0,},{collapsed:false}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/HoraDato915DaDato05062023_5.png" /> Hora Dato: 9:15; Día Dato: 05/06/2023': layer_HoraDato915DaDato05062023_5,'Ganadoras PREP por municipio-<br /><table><tr><td style="text-align: center;"><img src="legend/GanadorasPREPpormunicipio_4_AlejandraDelMoral0.png" /></td><td>Alejandra Del Moral</td></tr><tr><td style="text-align: center;"><img src="legend/GanadorasPREPpormunicipio_4_DelfinaGómezÁlvarez1.png" /></td><td>Delfina Gómez Álvarez</td></tr></table>': layer_GanadorasPREPpormunicipio_4,'<img src="legend/Lmitemunicipal_3.png" /> Límite municipal': layer_Lmitemunicipal_3,"Positron": layer_Positron_2,"Google Terrain": layer_GoogleTerrain_1,"Google Road": layer_GoogleRoad_0,},{collapsed:false}).addTo(map);
         setBounds();
         var i = 0;
-        layer_GanadorasPREPpormunicipio_3.eachLayer(function(layer) {
+        layer_GanadorasPREPpormunicipio_4.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((exp_label_GanadorasPREPpormunicipio_3_eval_expression(context) !== null?String('<div style="color: #323232; font-size: 10pt; font-weight: bold; font-family: \'Poppins\', sans-serif;">' + exp_label_GanadorasPREPpormunicipio_3_eval_expression(context)) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_GanadorasPREPpormunicipio_3'});
+            layer.bindTooltip((exp_label_GanadorasPREPpormunicipio_4_eval_expression(context) !== null?String('<div style="color: #323232; font-size: 10pt; font-weight: bold; font-family: \'Poppins\', sans-serif;">' + exp_label_GanadorasPREPpormunicipio_4_eval_expression(context)) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_GanadorasPREPpormunicipio_4'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
               addLabel(layer, i);
               i++;
         });
-        resetLabels([layer_GanadorasPREPpormunicipio_3]);
+        resetLabels([layer_GanadorasPREPpormunicipio_4]);
         map.on("zoomend", function(){
-            resetLabels([layer_GanadorasPREPpormunicipio_3]);
+            resetLabels([layer_GanadorasPREPpormunicipio_4]);
         });
         map.on("layeradd", function(){
-            resetLabels([layer_GanadorasPREPpormunicipio_3]);
+            resetLabels([layer_GanadorasPREPpormunicipio_4]);
         });
         map.on("layerremove", function(){
-            resetLabels([layer_GanadorasPREPpormunicipio_3]);
+            resetLabels([layer_GanadorasPREPpormunicipio_4]);
         });
         </script>
     </body>
