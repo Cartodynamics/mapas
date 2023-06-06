@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/AlcaldasCDMX_1.js"></script>
+        <script src="data/Negociosen1km_2.js"></script>
+        <script src="data/Negociosdeuas_3.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.19375304007419,-99.50026871132782],[19.567460914325117,-98.76663521602477]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Mapabase_0');
+        map.getPane('pane_Mapabase_0').style.zIndex = 400;
+        var layer_Mapabase_0 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Mapabase_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Mapabase_0;
+        map.addLayer(layer_Mapabase_0);
+        function pop_AlcaldasCDMX_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['X_id'] !== null ? autolinker.link(feature.properties['X_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_ent'] !== null ? autolinker.link(feature.properties['cve_ent'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cvegeo'] !== null ? autolinker.link(feature.properties['cvegeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['g_pnt_2'] !== null ? autolinker.link(feature.properties['g_pnt_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geo_shp'] !== null ? autolinker.link(feature.properties['geo_shp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['municip'] !== null ? autolinker.link(feature.properties['municip'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Mujeco'] !== null ? autolinker.link(feature.properties['Mujeco'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_AlcaldasCDMX_1_0() {
+            return {
+                pane: 'pane_AlcaldasCDMX_1',
+                opacity: 1,
+                color: 'rgba(4,49,142,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(164,113,88,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_AlcaldasCDMX_1');
+        map.getPane('pane_AlcaldasCDMX_1').style.zIndex = 401;
+        map.getPane('pane_AlcaldasCDMX_1').style['mix-blend-mode'] = 'normal';
+        var layer_AlcaldasCDMX_1 = new L.geoJson(json_AlcaldasCDMX_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_AlcaldasCDMX_1',
+            layerName: 'layer_AlcaldasCDMX_1',
+            pane: 'pane_AlcaldasCDMX_1',
+            onEachFeature: pop_AlcaldasCDMX_1,
+            style: style_AlcaldasCDMX_1_0,
+        });
+        bounds_group.addLayer(layer_AlcaldasCDMX_1);
+        map.addLayer(layer_AlcaldasCDMX_1);
+        function pop_Negociosen1km_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['left'] !== null ? autolinker.link(feature.properties['left'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['top'] !== null ? autolinker.link(feature.properties['top'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['right'] !== null ? autolinker.link(feature.properties['right'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['bottom'] !== null ? autolinker.link(feature.properties['bottom'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['negocios'] !== null ? autolinker.link(feature.properties['negocios'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Negociosen1km_2_0(feature) {
+            if (feature.properties['negocios'] >= 1.000000 && feature.properties['negocios'] <= 2.000000 ) {
+                return {
+                pane: 'pane_Negociosen1km_2',
+                opacity: 1,
+                color: 'rgba(228,228,228,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,151,185,0.7019607843137254)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['negocios'] >= 2.000000 && feature.properties['negocios'] <= 5.000000 ) {
+                return {
+                pane: 'pane_Negociosen1km_2',
+                opacity: 1,
+                color: 'rgba(228,228,228,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(173,95,173,0.7019607843137254)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['negocios'] >= 5.000000 && feature.properties['negocios'] <= 17.000000 ) {
+                return {
+                pane: 'pane_Negociosen1km_2',
+                opacity: 1,
+                color: 'rgba(228,228,228,0.7019607843137254)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(131,75,160,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Negociosen1km_2');
+        map.getPane('pane_Negociosen1km_2').style.zIndex = 402;
+        map.getPane('pane_Negociosen1km_2').style['mix-blend-mode'] = 'normal';
+        var layer_Negociosen1km_2 = new L.geoJson(json_Negociosen1km_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Negociosen1km_2',
+            layerName: 'layer_Negociosen1km_2',
+            pane: 'pane_Negociosen1km_2',
+            onEachFeature: pop_Negociosen1km_2,
+            style: style_Negociosen1km_2_0,
+        });
+        bounds_group.addLayer(layer_Negociosen1km_2);
+        map.addLayer(layer_Negociosen1km_2);
+        function pop_Negociosdeuas_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_ESTAB'] !== null ? autolinker.link(feature.properties['NOM_ESTAB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PER_OCU'] !== null ? autolinker.link(feature.properties['PER_OCU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_VIAL'] !== null ? autolinker.link(feature.properties['NOM_VIAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NUMERO_EXT'] !== null ? autolinker.link(feature.properties['NUMERO_EXT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMB_ASENT'] !== null ? autolinker.link(feature.properties['NOMB_ASENT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ENTIDAD'] !== null ? autolinker.link(feature.properties['ENTIDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MUNICIPIO'] !== null ? autolinker.link(feature.properties['MUNICIPIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LOCALIDAD'] !== null ? autolinker.link(feature.properties['LOCALIDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LATITUD'] !== null ? autolinker.link(feature.properties['LATITUD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LONGITUD'] !== null ? autolinker.link(feature.properties['LONGITUD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FECHA_ALTA'] !== null ? autolinker.link(feature.properties['FECHA_ALTA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Negociosdeuas_3_0() {
+            return {
+                pane: 'pane_Negociosdeuas_3',
+                radius: 2.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(64,14,50,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Negociosdeuas_3');
+        map.getPane('pane_Negociosdeuas_3').style.zIndex = 403;
+        map.getPane('pane_Negociosdeuas_3').style['mix-blend-mode'] = 'normal';
+        var layer_Negociosdeuas_3 = new L.geoJson(json_Negociosdeuas_3, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Negociosdeuas_3',
+            layerName: 'layer_Negociosdeuas_3',
+            pane: 'pane_Negociosdeuas_3',
+            onEachFeature: pop_Negociosdeuas_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Negociosdeuas_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Negociosdeuas_3);
+        map.addLayer(layer_Negociosdeuas_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Negociosdeuas_3.png" /> Negocios de uñas': layer_Negociosdeuas_3,'Negocios en 1 km<br /><table><tr><td style="text-align: center;"><img src="legend/Negociosen1km_2_120.png" /></td><td>1 - 2</td></tr><tr><td style="text-align: center;"><img src="legend/Negociosen1km_2_251.png" /></td><td>2 - 5</td></tr><tr><td style="text-align: center;"><img src="legend/Negociosen1km_2_5172.png" /></td><td>5 - 17</td></tr></table>': layer_Negociosen1km_2,'<img src="legend/AlcaldasCDMX_1.png" /> Alcaldías CDMX': layer_AlcaldasCDMX_1,"Mapa base": layer_Mapabase_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
