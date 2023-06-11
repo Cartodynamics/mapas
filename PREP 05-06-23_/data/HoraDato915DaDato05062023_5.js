@@ -1,1 +1,0 @@
-var json_HoraDato915DaDato05062023_5 = {"type":"FeatureCollection","name":"HoraDato915DaDato05062023_5","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","HoraDato":"10:00","DiaDato":"2023-06-05"},"geometry":null}]}
