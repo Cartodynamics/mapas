@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Establecimientosen75km_0.js"></script>
+        <script src="data/UnidadeseconomicasdeFajas_1.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[13.526976028267741,-124.16016250772634],[34.334928450191285,-80.89908093263713]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_Establecimientosen75km_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['left'] !== null ? autolinker.link(feature.properties['left'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['top'] !== null ? autolinker.link(feature.properties['top'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['right'] !== null ? autolinker.link(feature.properties['right'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['bottom'] !== null ? autolinker.link(feature.properties['bottom'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['unidades_fajas'] !== null ? autolinker.link(feature.properties['unidades_fajas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Establecimientosen75km_0_0(feature) {
+            if (feature.properties['unidades_fajas'] >= 1.000000 && feature.properties['unidades_fajas'] <= 2.000000 ) {
+                return {
+                pane: 'pane_Establecimientosen75km_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(242,216,216,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['unidades_fajas'] >= 2.000000 && feature.properties['unidades_fajas'] <= 6.000000 ) {
+                return {
+                pane: 'pane_Establecimientosen75km_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(245,146,142,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['unidades_fajas'] >= 6.000000 && feature.properties['unidades_fajas'] <= 22.000000 ) {
+                return {
+                pane: 'pane_Establecimientosen75km_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(84,91,119,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['unidades_fajas'] >= 22.000000 && feature.properties['unidades_fajas'] <= 50.000000 ) {
+                return {
+                pane: 'pane_Establecimientosen75km_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(60,65,85,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_Establecimientosen75km_0');
+        map.getPane('pane_Establecimientosen75km_0').style.zIndex = 400;
+        map.getPane('pane_Establecimientosen75km_0').style['mix-blend-mode'] = 'normal';
+        var layer_Establecimientosen75km_0 = new L.geoJson(json_Establecimientosen75km_0, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Establecimientosen75km_0',
+            layerName: 'layer_Establecimientosen75km_0',
+            pane: 'pane_Establecimientosen75km_0',
+            onEachFeature: pop_Establecimientosen75km_0,
+            style: style_Establecimientosen75km_0_0,
+        });
+        bounds_group.addLayer(layer_Establecimientosen75km_0);
+        map.addLayer(layer_Establecimientosen75km_0);
+        function pop_UnidadeseconomicasdeFajas_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nombre</th>\
+                        <td>' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nom act</th>\
+                        <td>' + (feature.properties['Nom act'] !== null ? autolinker.link(feature.properties['Nom act'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Domicilio</th>\
+                        <td>' + (feature.properties['Domicilio'] !== null ? autolinker.link(feature.properties['Domicilio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nom asent</th>\
+                        <td>' + (feature.properties['Nom asent'] !== null ? autolinker.link(feature.properties['Nom asent'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Entidad</th>\
+                        <td>' + (feature.properties['Entidad'] !== null ? autolinker.link(feature.properties['Entidad'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Municipio</th>\
+                        <td>' + (feature.properties['Municipio'] !== null ? autolinker.link(feature.properties['Municipio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Fecha alta</th>\
+                        <td>' + (feature.properties['Fecha alta'] !== null ? autolinker.link(feature.properties['Fecha alta'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_UnidadeseconomicasdeFajas_1_0() {
+            return {
+                pane: 'pane_UnidadeseconomicasdeFajas_1',
+                radius: 3.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_UnidadeseconomicasdeFajas_1');
+        map.getPane('pane_UnidadeseconomicasdeFajas_1').style.zIndex = 401;
+        map.getPane('pane_UnidadeseconomicasdeFajas_1').style['mix-blend-mode'] = 'normal';
+        var layer_UnidadeseconomicasdeFajas_1 = new L.geoJson(json_UnidadeseconomicasdeFajas_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_UnidadeseconomicasdeFajas_1',
+            layerName: 'layer_UnidadeseconomicasdeFajas_1',
+            pane: 'pane_UnidadeseconomicasdeFajas_1',
+            onEachFeature: pop_UnidadeseconomicasdeFajas_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_UnidadeseconomicasdeFajas_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_UnidadeseconomicasdeFajas_1);
+        map.addLayer(layer_UnidadeseconomicasdeFajas_1);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/UnidadeseconomicasdeFajas_1.png" /> Unidades economicas de Fajas': layer_UnidadeseconomicasdeFajas_1,'Establecimientos en 75 km<br /><table><tr><td style="text-align: center;"><img src="legend/Establecimientosen75km_0_120.png" /></td><td>1 - 2</td></tr><tr><td style="text-align: center;"><img src="legend/Establecimientosen75km_0_261.png" /></td><td>2 - 6</td></tr><tr><td style="text-align: center;"><img src="legend/Establecimientosen75km_0_6222.png" /></td><td>6 - 22</td></tr><tr><td style="text-align: center;"><img src="legend/Establecimientosen75km_0_22503.png" /></td><td>22 - 50</td></tr></table>': layer_Establecimientosen75km_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
