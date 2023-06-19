@@ -30,8 +30,9 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="data/Folioconcluido_2.js"></script>
-        <script src="data/FolioSUAC_3.js"></script>
+        <script src="data/Lmitealcaldas_2.js"></script>
+        <script src="data/Folioconcluido_3.js"></script>
+        <script src="data/FolioSUAC_4.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
@@ -54,6 +55,7 @@
             maxNativeZoom: 20
         });
         layer_GoogleRoad_0;
+        map.addLayer(layer_GoogleRoad_0);
         map.createPane('pane_Positron_1');
         map.getPane('pane_Positron_1').style.zIndex = 401;
         var layer_Positron_1 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
@@ -67,7 +69,69 @@
         });
         layer_Positron_1;
         map.addLayer(layer_Positron_1);
-        function pop_Folioconcluido_2(feature, layer) {
+        function pop_Lmitealcaldas_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['X_id'] !== null ? autolinker.link(feature.properties['X_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_ent'] !== null ? autolinker.link(feature.properties['cve_ent'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cvegeo'] !== null ? autolinker.link(feature.properties['cvegeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['g_pnt_2'] !== null ? autolinker.link(feature.properties['g_pnt_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geo_shp'] !== null ? autolinker.link(feature.properties['geo_shp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['municip'] !== null ? autolinker.link(feature.properties['municip'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lmitealcaldas_2_0() {
+            return {
+                pane: 'pane_Lmitealcaldas_2',
+                opacity: 1,
+                color: 'rgba(150,146,142,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,89,137,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Lmitealcaldas_2');
+        map.getPane('pane_Lmitealcaldas_2').style.zIndex = 402;
+        map.getPane('pane_Lmitealcaldas_2').style['mix-blend-mode'] = 'normal';
+        var layer_Lmitealcaldas_2 = new L.geoJson(json_Lmitealcaldas_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Lmitealcaldas_2',
+            layerName: 'layer_Lmitealcaldas_2',
+            pane: 'pane_Lmitealcaldas_2',
+            onEachFeature: pop_Lmitealcaldas_2,
+            style: style_Lmitealcaldas_2_0,
+        });
+        bounds_group.addLayer(layer_Lmitealcaldas_2);
+        map.addLayer(layer_Lmitealcaldas_2);
+        function pop_Folioconcluido_3(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">id</th>\
@@ -89,10 +153,10 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Folioconcluido_2_0(feature) {
+        function style_Folioconcluido_3_0(feature) {
             if (feature.properties['Concluido'] >= 2.000000 && feature.properties['Concluido'] <= 13.000000 ) {
                 return {
-                pane: 'pane_Folioconcluido_2',
+                pane: 'pane_Folioconcluido_3',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.0)',
                 dashArray: '',
@@ -107,7 +171,7 @@
             }
             if (feature.properties['Concluido'] >= 13.000000 && feature.properties['Concluido'] <= 25.000000 ) {
                 return {
-                pane: 'pane_Folioconcluido_2',
+                pane: 'pane_Folioconcluido_3',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.0)',
                 dashArray: '',
@@ -122,7 +186,7 @@
             }
             if (feature.properties['Concluido'] >= 25.000000 && feature.properties['Concluido'] <= 34.000000 ) {
                 return {
-                pane: 'pane_Folioconcluido_2',
+                pane: 'pane_Folioconcluido_3',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.0)',
                 dashArray: '',
@@ -137,7 +201,7 @@
             }
             if (feature.properties['Concluido'] >= 34.000000 && feature.properties['Concluido'] <= 64.000000 ) {
                 return {
-                pane: 'pane_Folioconcluido_2',
+                pane: 'pane_Folioconcluido_3',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.0)',
                 dashArray: '',
@@ -152,7 +216,7 @@
             }
             if (feature.properties['Concluido'] >= 64.000000 && feature.properties['Concluido'] <= 96.000000 ) {
                 return {
-                pane: 'pane_Folioconcluido_2',
+                pane: 'pane_Folioconcluido_3',
                 opacity: 1,
                 color: 'rgba(35,35,35,0.0)',
                 dashArray: '',
@@ -166,21 +230,21 @@
             }
             }
         }
-        map.createPane('pane_Folioconcluido_2');
-        map.getPane('pane_Folioconcluido_2').style.zIndex = 402;
-        map.getPane('pane_Folioconcluido_2').style['mix-blend-mode'] = 'normal';
-        var layer_Folioconcluido_2 = new L.geoJson(json_Folioconcluido_2, {
+        map.createPane('pane_Folioconcluido_3');
+        map.getPane('pane_Folioconcluido_3').style.zIndex = 403;
+        map.getPane('pane_Folioconcluido_3').style['mix-blend-mode'] = 'normal';
+        var layer_Folioconcluido_3 = new L.geoJson(json_Folioconcluido_3, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Folioconcluido_2',
-            layerName: 'layer_Folioconcluido_2',
-            pane: 'pane_Folioconcluido_2',
-            onEachFeature: pop_Folioconcluido_2,
-            style: style_Folioconcluido_2_0,
+            dataVar: 'json_Folioconcluido_3',
+            layerName: 'layer_Folioconcluido_3',
+            pane: 'pane_Folioconcluido_3',
+            onEachFeature: pop_Folioconcluido_3,
+            style: style_Folioconcluido_3_0,
         });
-        bounds_group.addLayer(layer_Folioconcluido_2);
-        map.addLayer(layer_Folioconcluido_2);
-        function pop_FolioSUAC_3(feature, layer) {
+        bounds_group.addLayer(layer_Folioconcluido_3);
+        map.addLayer(layer_Folioconcluido_3);
+        function pop_FolioSUAC_4(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">folio</th>\
@@ -254,9 +318,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_FolioSUAC_3_0() {
+        function style_FolioSUAC_4_0() {
             return {
-                pane: 'pane_FolioSUAC_3',
+                pane: 'pane_FolioSUAC_4',
                 radius: 2.8000000000000003,
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
@@ -270,28 +334,28 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_FolioSUAC_3');
-        map.getPane('pane_FolioSUAC_3').style.zIndex = 403;
-        map.getPane('pane_FolioSUAC_3').style['mix-blend-mode'] = 'normal';
-        var layer_FolioSUAC_3 = new L.geoJson(json_FolioSUAC_3, {
+        map.createPane('pane_FolioSUAC_4');
+        map.getPane('pane_FolioSUAC_4').style.zIndex = 404;
+        map.getPane('pane_FolioSUAC_4').style['mix-blend-mode'] = 'normal';
+        var layer_FolioSUAC_4 = new L.geoJson(json_FolioSUAC_4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_FolioSUAC_3',
-            layerName: 'layer_FolioSUAC_3',
-            pane: 'pane_FolioSUAC_3',
-            onEachFeature: pop_FolioSUAC_3,
+            dataVar: 'json_FolioSUAC_4',
+            layerName: 'layer_FolioSUAC_4',
+            pane: 'pane_FolioSUAC_4',
+            onEachFeature: pop_FolioSUAC_4,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_FolioSUAC_3_0(feature));
+                return L.circleMarker(latlng, style_FolioSUAC_4_0(feature));
             },
         });
-        bounds_group.addLayer(layer_FolioSUAC_3);
-        map.addLayer(layer_FolioSUAC_3);
+        bounds_group.addLayer(layer_FolioSUAC_4);
+        map.addLayer(layer_FolioSUAC_4);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/FolioSUAC_3.png" /> Folio SUAC ': layer_FolioSUAC_3,'Folio concluido<br /><table><tr><td style="text-align: center;"><img src="legend/Folioconcluido_2_2130.png" /></td><td>2 - 13</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_2_13251.png" /></td><td>13 - 25</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_2_25342.png" /></td><td>25 - 34</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_2_34643.png" /></td><td>34 - 64</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_2_64964.png" /></td><td>64 - 96</td></tr></table>': layer_Folioconcluido_2,"Positron": layer_Positron_1,"Google Road": layer_GoogleRoad_0,},{collapsed:false}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/FolioSUAC_4.png" /> Folio SUAC ': layer_FolioSUAC_4,'Folio concluido<br /><table><tr><td style="text-align: center;"><img src="legend/Folioconcluido_3_2130.png" /></td><td>2 - 13</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_3_13251.png" /></td><td>13 - 25</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_3_25342.png" /></td><td>25 - 34</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_3_34643.png" /></td><td>34 - 64</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_3_64964.png" /></td><td>64 - 96</td></tr></table>': layer_Folioconcluido_3,'<img src="legend/Lmitealcaldas_2.png" /> Límite alcaldías': layer_Lmitealcaldas_2,"Positron": layer_Positron_1,"Google Road": layer_GoogleRoad_0,},{collapsed:false}).addTo(map);
         setBounds();
         </script>
     </body>
