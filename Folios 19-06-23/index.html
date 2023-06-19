@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Folioconcluido_2.js"></script>
+        <script src="data/FolioSUAC_3.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.001874304186718,-99.81258507092934],[19.754050521007468,-98.32297555091274]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleRoad_0');
+        map.getPane('pane_GoogleRoad_0').style.zIndex = 400;
+        var layer_GoogleRoad_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleRoad_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleRoad_0;
+        map.createPane('pane_Positron_1');
+        map.getPane('pane_Positron_1').style.zIndex = 401;
+        var layer_Positron_1 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Positron_1',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Positron_1;
+        map.addLayer(layer_Positron_1);
+        function pop_Folioconcluido_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">id</th>\
+                        <td>' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alcaldia</th>\
+                        <td>' + (feature.properties['Alcaldia'] !== null ? autolinker.link(feature.properties['Alcaldia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">cvegeo</th>\
+                        <td>' + (feature.properties['cvegeo'] !== null ? autolinker.link(feature.properties['cvegeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Concluido</th>\
+                        <td>' + (feature.properties['Concluido'] !== null ? autolinker.link(feature.properties['Concluido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Folioconcluido_2_0(feature) {
+            if (feature.properties['Concluido'] >= 2.000000 && feature.properties['Concluido'] <= 13.000000 ) {
+                return {
+                pane: 'pane_Folioconcluido_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(246,239,247,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Concluido'] >= 13.000000 && feature.properties['Concluido'] <= 25.000000 ) {
+                return {
+                pane: 'pane_Folioconcluido_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(189,201,225,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Concluido'] >= 25.000000 && feature.properties['Concluido'] <= 34.000000 ) {
+                return {
+                pane: 'pane_Folioconcluido_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(103,169,207,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Concluido'] >= 34.000000 && feature.properties['Concluido'] <= 64.000000 ) {
+                return {
+                pane: 'pane_Folioconcluido_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(28,144,153,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Concluido'] >= 64.000000 && feature.properties['Concluido'] <= 96.000000 ) {
+                return {
+                pane: 'pane_Folioconcluido_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,108,89,0.8)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Folioconcluido_2');
+        map.getPane('pane_Folioconcluido_2').style.zIndex = 402;
+        map.getPane('pane_Folioconcluido_2').style['mix-blend-mode'] = 'normal';
+        var layer_Folioconcluido_2 = new L.geoJson(json_Folioconcluido_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Folioconcluido_2',
+            layerName: 'layer_Folioconcluido_2',
+            pane: 'pane_Folioconcluido_2',
+            onEachFeature: pop_Folioconcluido_2,
+            style: style_Folioconcluido_2_0,
+        });
+        bounds_group.addLayer(layer_Folioconcluido_2);
+        map.addLayer(layer_Folioconcluido_2);
+        function pop_FolioSUAC_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">folio</th>\
+                        <td>' + (feature.properties['folio'] !== null ? autolinker.link(feature.properties['folio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">procedencia</th>\
+                        <td>' + (feature.properties['procedencia'] !== null ? autolinker.link(feature.properties['procedencia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">descripcion_tema</th>\
+                        <td>' + (feature.properties['descripcion_tema'] !== null ? autolinker.link(feature.properties['descripcion_tema'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">id_turno</th>\
+                        <td>' + (feature.properties['id_turno'] !== null ? autolinker.link(feature.properties['id_turno'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">des_ente</th>\
+                        <td>' + (feature.properties['des_ente'] !== null ? autolinker.link(feature.properties['des_ente'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">descripcion_solicitud</th>\
+                        <td>' + (feature.properties['descripcion_solicitud'] !== null ? autolinker.link(feature.properties['descripcion_solicitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">sexo</th>\
+                        <td>' + (feature.properties['sexo'] !== null ? autolinker.link(feature.properties['sexo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">geo_latitud_solicitud</th>\
+                        <td>' + (feature.properties['geo_latitud_solicitud'] !== null ? autolinker.link(feature.properties['geo_latitud_solicitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">geo_longitud_solicitud</th>\
+                        <td>' + (feature.properties['geo_longitud_solicitud'] !== null ? autolinker.link(feature.properties['geo_longitud_solicitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">fecha_solicitud</th>\
+                        <td>' + (feature.properties['fecha_solicitud'] !== null ? autolinker.link(feature.properties['fecha_solicitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">fecha_turnado</th>\
+                        <td>' + (feature.properties['fecha_turnado'] !== null ? autolinker.link(feature.properties['fecha_turnado'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">fecha_aceptado</th>\
+                        <td>' + (feature.properties['fecha_aceptado'] !== null ? autolinker.link(feature.properties['fecha_aceptado'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">fecha_cierre</th>\
+                        <td>' + (feature.properties['fecha_cierre'] !== null ? autolinker.link(feature.properties['fecha_cierre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">fecha_termino</th>\
+                        <td>' + (feature.properties['fecha_termino'] !== null ? autolinker.link(feature.properties['fecha_termino'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">fecha_concluido</th>\
+                        <td>' + (feature.properties['fecha_concluido'] !== null ? autolinker.link(feature.properties['fecha_concluido'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">dias_retraso</th>\
+                        <td>' + (feature.properties['dias_retraso'] !== null ? autolinker.link(feature.properties['dias_retraso'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">desc_estatus</th>\
+                        <td>' + (feature.properties['desc_estatus'] !== null ? autolinker.link(feature.properties['desc_estatus'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_FolioSUAC_3_0() {
+            return {
+                pane: 'pane_FolioSUAC_3',
+                radius: 2.8000000000000003,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(55,66,89,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_FolioSUAC_3');
+        map.getPane('pane_FolioSUAC_3').style.zIndex = 403;
+        map.getPane('pane_FolioSUAC_3').style['mix-blend-mode'] = 'normal';
+        var layer_FolioSUAC_3 = new L.geoJson(json_FolioSUAC_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_FolioSUAC_3',
+            layerName: 'layer_FolioSUAC_3',
+            pane: 'pane_FolioSUAC_3',
+            onEachFeature: pop_FolioSUAC_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_FolioSUAC_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_FolioSUAC_3);
+        map.addLayer(layer_FolioSUAC_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/FolioSUAC_3.png" /> Folio SUAC ': layer_FolioSUAC_3,'Folio concluido<br /><table><tr><td style="text-align: center;"><img src="legend/Folioconcluido_2_2130.png" /></td><td>2 - 13</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_2_13251.png" /></td><td>13 - 25</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_2_25342.png" /></td><td>25 - 34</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_2_34643.png" /></td><td>34 - 64</td></tr><tr><td style="text-align: center;"><img src="legend/Folioconcluido_2_64964.png" /></td><td>64 - 96</td></tr></table>': layer_Folioconcluido_2,"Positron": layer_Positron_1,"Google Road": layer_GoogleRoad_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
