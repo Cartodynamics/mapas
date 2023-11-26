@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/ColoniasconmsAPssinconexin_1.js"></script>
+        <script src="data/Alcaldas_2.js"></script>
+        <script src="data/Msde6semanassinconexiones_3.js"></script>
+        <script src="data/Entre4y6semanassinconexiones_4.js"></script>
+        <script src="data/Msde2semanassinconexiones_5.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.187123692719044,-99.56702469229471],[19.54880901084532,-98.7648346486297]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Positron_0');
+        map.getPane('pane_Positron_0').style.zIndex = 400;
+        var layer_Positron_0 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Positron_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Positron_0;
+        map.addLayer(layer_Positron_0);
+        function pop_ColoniasconmsAPssinconexin_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ENT</th>\
+                        <td>' + (feature.properties['ENT'] !== null ? autolinker.link(feature.properties['ENT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CVEUT</th>\
+                        <td>' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">sinconex</th>\
+                        <td>' + (feature.properties['sinconex'] !== null ? autolinker.link(feature.properties['sinconex'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ColoniasconmsAPssinconexin_1_0(feature) {
+            if (feature.properties['sinconex'] >= 1.000000 && feature.properties['sinconex'] <= 22.000000 ) {
+                return {
+                pane: 'pane_ColoniasconmsAPssinconexin_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,245,240,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['sinconex'] >= 22.000000 && feature.properties['sinconex'] <= 80.000000 ) {
+                return {
+                pane: 'pane_ColoniasconmsAPssinconexin_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,190,165,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['sinconex'] >= 80.000000 && feature.properties['sinconex'] <= 176.000000 ) {
+                return {
+                pane: 'pane_ColoniasconmsAPssinconexin_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,112,80,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['sinconex'] >= 176.000000 && feature.properties['sinconex'] <= 329.000000 ) {
+                return {
+                pane: 'pane_ColoniasconmsAPssinconexin_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,32,32,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['sinconex'] >= 329.000000 && feature.properties['sinconex'] <= 589.000000 ) {
+                return {
+                pane: 'pane_ColoniasconmsAPssinconexin_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(103,0,13,0.8)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_ColoniasconmsAPssinconexin_1');
+        map.getPane('pane_ColoniasconmsAPssinconexin_1').style.zIndex = 401;
+        map.getPane('pane_ColoniasconmsAPssinconexin_1').style['mix-blend-mode'] = 'normal';
+        var layer_ColoniasconmsAPssinconexin_1 = new L.geoJson(json_ColoniasconmsAPssinconexin_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ColoniasconmsAPssinconexin_1',
+            layerName: 'layer_ColoniasconmsAPssinconexin_1',
+            pane: 'pane_ColoniasconmsAPssinconexin_1',
+            onEachFeature: pop_ColoniasconmsAPssinconexin_1,
+            style: style_ColoniasconmsAPssinconexin_1_0,
+        });
+        bounds_group.addLayer(layer_ColoniasconmsAPssinconexin_1);
+        map.addLayer(layer_ColoniasconmsAPssinconexin_1);
+        function pop_Alcaldas_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['X_id'] !== null ? autolinker.link(feature.properties['X_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_ent'] !== null ? autolinker.link(feature.properties['cve_ent'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cvegeo'] !== null ? autolinker.link(feature.properties['cvegeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['g_pnt_2'] !== null ? autolinker.link(feature.properties['g_pnt_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geo_shp'] !== null ? autolinker.link(feature.properties['geo_shp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['municip'] !== null ? autolinker.link(feature.properties['municip'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Mujeco'] !== null ? autolinker.link(feature.properties['Mujeco'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Alcaldas_2_0() {
+            return {
+                pane: 'pane_Alcaldas_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,158,23,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Alcaldas_2');
+        map.getPane('pane_Alcaldas_2').style.zIndex = 402;
+        map.getPane('pane_Alcaldas_2').style['mix-blend-mode'] = 'normal';
+        var layer_Alcaldas_2 = new L.geoJson(json_Alcaldas_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Alcaldas_2',
+            layerName: 'layer_Alcaldas_2',
+            pane: 'pane_Alcaldas_2',
+            onEachFeature: pop_Alcaldas_2,
+            style: style_Alcaldas_2_0,
+        });
+        bounds_group.addLayer(layer_Alcaldas_2);
+        map.addLayer(layer_Alcaldas_2);
+        function pop_Msde6semanassinconexiones_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">id_sitio</th>\
+                        <td>' + (feature.properties['id_sitio'] !== null ? autolinker.link(feature.properties['id_sitio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">total</th>\
+                        <td>' + (feature.properties['total'] !== null ? autolinker.link(feature.properties['total'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">id_platafo</th>\
+                        <td>' + (feature.properties['id_platafo'] !== null ? autolinker.link(feature.properties['id_platafo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">longitud</th>\
+                        <td>' + (feature.properties['longitud'] !== null ? autolinker.link(feature.properties['longitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">latitud</th>\
+                        <td>' + (feature.properties['latitud'] !== null ? autolinker.link(feature.properties['latitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">uhab</th>\
+                        <td>' + (feature.properties['uhab'] !== null ? autolinker.link(feature.properties['uhab'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Colonia</th>\
+                        <td>' + (feature.properties['Colonia'] !== null ? autolinker.link(feature.properties['Colonia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alcaldía</th>\
+                        <td>' + (feature.properties['Alcaldía'] !== null ? autolinker.link(feature.properties['Alcaldía'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Dirección</th>\
+                        <td>' + (feature.properties['Dirección'] !== null ? autolinker.link(feature.properties['Dirección'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">semanas</th>\
+                        <td>' + (feature.properties['semanas'] !== null ? autolinker.link(feature.properties['semanas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Msde6semanassinconexiones_3_0() {
+            return {
+                pane: 'pane_Msde6semanassinconexiones_3',
+                radius: 2.4,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(183,0,73,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Msde6semanassinconexiones_3');
+        map.getPane('pane_Msde6semanassinconexiones_3').style.zIndex = 403;
+        map.getPane('pane_Msde6semanassinconexiones_3').style['mix-blend-mode'] = 'normal';
+        var layer_Msde6semanassinconexiones_3 = new L.geoJson(json_Msde6semanassinconexiones_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Msde6semanassinconexiones_3',
+            layerName: 'layer_Msde6semanassinconexiones_3',
+            pane: 'pane_Msde6semanassinconexiones_3',
+            onEachFeature: pop_Msde6semanassinconexiones_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Msde6semanassinconexiones_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Msde6semanassinconexiones_3);
+        map.addLayer(layer_Msde6semanassinconexiones_3);
+        function pop_Entre4y6semanassinconexiones_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">id_sitio</th>\
+                        <td>' + (feature.properties['id_sitio'] !== null ? autolinker.link(feature.properties['id_sitio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">total</th>\
+                        <td>' + (feature.properties['total'] !== null ? autolinker.link(feature.properties['total'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">id_platafo</th>\
+                        <td>' + (feature.properties['id_platafo'] !== null ? autolinker.link(feature.properties['id_platafo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">longitud</th>\
+                        <td>' + (feature.properties['longitud'] !== null ? autolinker.link(feature.properties['longitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">latitud</th>\
+                        <td>' + (feature.properties['latitud'] !== null ? autolinker.link(feature.properties['latitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">uhab</th>\
+                        <td>' + (feature.properties['uhab'] !== null ? autolinker.link(feature.properties['uhab'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Colonia</th>\
+                        <td>' + (feature.properties['Colonia'] !== null ? autolinker.link(feature.properties['Colonia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alcaldía</th>\
+                        <td>' + (feature.properties['Alcaldía'] !== null ? autolinker.link(feature.properties['Alcaldía'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Dirección</th>\
+                        <td>' + (feature.properties['Dirección'] !== null ? autolinker.link(feature.properties['Dirección'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">semanas</th>\
+                        <td>' + (feature.properties['semanas'] !== null ? autolinker.link(feature.properties['semanas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Entre4y6semanassinconexiones_4_0() {
+            return {
+                pane: 'pane_Entre4y6semanassinconexiones_4',
+                radius: 2.4,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(35,91,78,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Entre4y6semanassinconexiones_4');
+        map.getPane('pane_Entre4y6semanassinconexiones_4').style.zIndex = 404;
+        map.getPane('pane_Entre4y6semanassinconexiones_4').style['mix-blend-mode'] = 'normal';
+        var layer_Entre4y6semanassinconexiones_4 = new L.geoJson(json_Entre4y6semanassinconexiones_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Entre4y6semanassinconexiones_4',
+            layerName: 'layer_Entre4y6semanassinconexiones_4',
+            pane: 'pane_Entre4y6semanassinconexiones_4',
+            onEachFeature: pop_Entre4y6semanassinconexiones_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Entre4y6semanassinconexiones_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Entre4y6semanassinconexiones_4);
+        map.addLayer(layer_Entre4y6semanassinconexiones_4);
+        function pop_Msde2semanassinconexiones_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">id_sitio</th>\
+                        <td>' + (feature.properties['id_sitio'] !== null ? autolinker.link(feature.properties['id_sitio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">total</th>\
+                        <td>' + (feature.properties['total'] !== null ? autolinker.link(feature.properties['total'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">id_platafo</th>\
+                        <td>' + (feature.properties['id_platafo'] !== null ? autolinker.link(feature.properties['id_platafo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">longitud</th>\
+                        <td>' + (feature.properties['longitud'] !== null ? autolinker.link(feature.properties['longitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">latitud</th>\
+                        <td>' + (feature.properties['latitud'] !== null ? autolinker.link(feature.properties['latitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">uhab</th>\
+                        <td>' + (feature.properties['uhab'] !== null ? autolinker.link(feature.properties['uhab'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Colonia</th>\
+                        <td>' + (feature.properties['Colonia'] !== null ? autolinker.link(feature.properties['Colonia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alcaldía</th>\
+                        <td>' + (feature.properties['Alcaldía'] !== null ? autolinker.link(feature.properties['Alcaldía'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Dirección</th>\
+                        <td>' + (feature.properties['Dirección'] !== null ? autolinker.link(feature.properties['Dirección'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">semanas</th>\
+                        <td>' + (feature.properties['semanas'] !== null ? autolinker.link(feature.properties['semanas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Msde2semanassinconexiones_5_0() {
+            return {
+                pane: 'pane_Msde2semanassinconexiones_5',
+                radius: 2.4,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(177,147,88,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Msde2semanassinconexiones_5');
+        map.getPane('pane_Msde2semanassinconexiones_5').style.zIndex = 405;
+        map.getPane('pane_Msde2semanassinconexiones_5').style['mix-blend-mode'] = 'normal';
+        var layer_Msde2semanassinconexiones_5 = new L.geoJson(json_Msde2semanassinconexiones_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Msde2semanassinconexiones_5',
+            layerName: 'layer_Msde2semanassinconexiones_5',
+            pane: 'pane_Msde2semanassinconexiones_5',
+            onEachFeature: pop_Msde2semanassinconexiones_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Msde2semanassinconexiones_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Msde2semanassinconexiones_5);
+        map.addLayer(layer_Msde2semanassinconexiones_5);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Msde2semanassinconexiones_5.png" /> Más de 2 semanas sin conexiones': layer_Msde2semanassinconexiones_5,'<img src="legend/Entre4y6semanassinconexiones_4.png" /> Entre 4 y 6 semanas sin conexiones': layer_Entre4y6semanassinconexiones_4,'<img src="legend/Msde6semanassinconexiones_3.png" /> Más de 6 semanas sin conexiones': layer_Msde6semanassinconexiones_3,'<img src="legend/Alcaldas_2.png" /> Alcaldías': layer_Alcaldas_2,'Colonias con más APs sin conexión<br /><table><tr><td style="text-align: center;"><img src="legend/ColoniasconmsAPssinconexin_1_1220.png" /></td><td>1 - 22</td></tr><tr><td style="text-align: center;"><img src="legend/ColoniasconmsAPssinconexin_1_22801.png" /></td><td>22 - 80</td></tr><tr><td style="text-align: center;"><img src="legend/ColoniasconmsAPssinconexin_1_801762.png" /></td><td>80 - 176</td></tr><tr><td style="text-align: center;"><img src="legend/ColoniasconmsAPssinconexin_1_1763293.png" /></td><td>176 - 329</td></tr><tr><td style="text-align: center;"><img src="legend/ColoniasconmsAPssinconexin_1_3295894.png" /></td><td>329 - 589</td></tr></table>': layer_ColoniasconmsAPssinconexin_1,"Positron": layer_Positron_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
