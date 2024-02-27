@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Coloniasporalcalda_2.js"></script>
+        <script src="data/Bufferspor2km_3.js"></script>
+        <script src="data/SSNMX_catalogo_20000101_20240227_CDMX_4.js"></script>
+        <script src="data/Alcaldas_5.js"></script>
+        <script src="data/FallaMixcoac_6.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.220269977882477,-99.35639392870101],[19.506143303382483,-98.91565771827882]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        document.querySelector(".leaflet-popup-pane").addEventListener("load", function(event) {
+          var tagName = event.target.tagName,
+            popup = map._popup;
+          // Also check if flag is already set.
+          if (tagName === "IMG" && popup && !popup._updated) {
+            popup._updated = true; // Set flag to prevent looping.
+            popup.update();
+          }
+        }, true);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Positron_0');
+        map.getPane('pane_Positron_0').style.zIndex = 400;
+        var layer_Positron_0 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Positron_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Positron_0;
+        map.createPane('pane_GoogleRoad_1');
+        map.getPane('pane_GoogleRoad_1').style.zIndex = 401;
+        var layer_GoogleRoad_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleRoad_1',
+            opacity: 0.8,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleRoad_1;
+        map.addLayer(layer_GoogleRoad_1);
+        function pop_Coloniasporalcalda_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ringId</th>\
+                        <td>' + (feature.properties['ringId'] !== null ? autolinker.link(feature.properties['ringId'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">distance</th>\
+                        <td>' + (feature.properties['distance'] !== null ? autolinker.link(feature.properties['distance'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Coloniasporalcalda_2_0(feature) {
+            switch(String(feature.properties['NOMDT'])) {
+                case 'ALVARO OBREGON':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(62,217,127,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BENITO JUAREZ':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,199,111,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'COYOACAN':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(167,213,75,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CUAJIMALPA DE MORELOS':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(216,97,198,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'CUAUHTEMOC':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(13,216,213,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'IZTACALCO':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,21,76,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'IZTAPALAPA':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,144,116,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'LA MAGDALENA CONTRERAS':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(161,54,227,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'MIGUEL HIDALGO':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(75,214,54,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'TLALPAN':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(65,54,207,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'VENUSTIANO CARRANZA':
+                    return {
+                pane: 'pane_Coloniasporalcalda_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(118,170,226,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Coloniasporalcalda_2');
+        map.getPane('pane_Coloniasporalcalda_2').style.zIndex = 402;
+        map.getPane('pane_Coloniasporalcalda_2').style['mix-blend-mode'] = 'normal';
+        var layer_Coloniasporalcalda_2 = new L.geoJson(json_Coloniasporalcalda_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Coloniasporalcalda_2',
+            layerName: 'layer_Coloniasporalcalda_2',
+            pane: 'pane_Coloniasporalcalda_2',
+            onEachFeature: pop_Coloniasporalcalda_2,
+            style: style_Coloniasporalcalda_2_0,
+        });
+        bounds_group.addLayer(layer_Coloniasporalcalda_2);
+        function pop_Bufferspor2km_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NOMDT</th>\
+                        <td>' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMUT</th>\
+                        <td>' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ringId</th>\
+                        <td>' + (feature.properties['ringId'] !== null ? autolinker.link(feature.properties['ringId'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">distance</th>\
+                        <td>' + (feature.properties['distance'] !== null ? autolinker.link(feature.properties['distance'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Bufferspor2km_3_0(feature) {
+            switch(String(feature.properties['ringId'])) {
+                case '1':
+                    return {
+                pane: 'pane_Bufferspor2km_3',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(13,8,135,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_Bufferspor2km_3',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(156,23,158,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_Bufferspor2km_3',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,121,83,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '4':
+                    return {
+                pane: 'pane_Bufferspor2km_3',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(240,249,33,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Bufferspor2km_3');
+        map.getPane('pane_Bufferspor2km_3').style.zIndex = 403;
+        map.getPane('pane_Bufferspor2km_3').style['mix-blend-mode'] = 'normal';
+        var layer_Bufferspor2km_3 = new L.geoJson(json_Bufferspor2km_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Bufferspor2km_3',
+            layerName: 'layer_Bufferspor2km_3',
+            pane: 'pane_Bufferspor2km_3',
+            onEachFeature: pop_Bufferspor2km_3,
+            style: style_Bufferspor2km_3_0,
+        });
+        bounds_group.addLayer(layer_Bufferspor2km_3);
+        map.addLayer(layer_Bufferspor2km_3);
+        function pop_SSNMX_catalogo_20000101_20240227_CDMX_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Fecha</th>\
+                        <td>' + (feature.properties['Fecha'] !== null ? autolinker.link(feature.properties['Fecha'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Hora</th>\
+                        <td>' + (feature.properties['Hora'] !== null ? autolinker.link(feature.properties['Hora'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Magnitud</th>\
+                        <td>' + (feature.properties['Magnitud'] !== null ? autolinker.link(feature.properties['Magnitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Profundidad</th>\
+                        <td>' + (feature.properties['Profundidad'] !== null ? autolinker.link(feature.properties['Profundidad'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Referencia de localizacion</th>\
+                        <td>' + (feature.properties['Referencia de localizacion'] !== null ? autolinker.link(feature.properties['Referencia de localizacion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_SSNMX_catalogo_20000101_20240227_CDMX_4_0(feature) {
+            if (feature.properties['Magnitud'] >= 0.300000 && feature.properties['Magnitud'] <= 1.400000 ) {
+                return {
+                pane: 'pane_SSNMX_catalogo_20000101_20240227_CDMX_4',
+                radius: 3.6,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(240,249,33,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Magnitud'] >= 1.400000 && feature.properties['Magnitud'] <= 1.900000 ) {
+                return {
+                pane: 'pane_SSNMX_catalogo_20000101_20240227_CDMX_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(248,149,65,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Magnitud'] >= 1.900000 && feature.properties['Magnitud'] <= 2.400000 ) {
+                return {
+                pane: 'pane_SSNMX_catalogo_20000101_20240227_CDMX_4',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(203,71,120,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Magnitud'] >= 2.400000 && feature.properties['Magnitud'] <= 3.000000 ) {
+                return {
+                pane: 'pane_SSNMX_catalogo_20000101_20240227_CDMX_4',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(126,3,168,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Magnitud'] >= 3.000000 && feature.properties['Magnitud'] <= 4.000000 ) {
+                return {
+                pane: 'pane_SSNMX_catalogo_20000101_20240227_CDMX_4',
+                radius: 4.8,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(13,8,135,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_SSNMX_catalogo_20000101_20240227_CDMX_4');
+        map.getPane('pane_SSNMX_catalogo_20000101_20240227_CDMX_4').style.zIndex = 404;
+        map.getPane('pane_SSNMX_catalogo_20000101_20240227_CDMX_4').style['mix-blend-mode'] = 'normal';
+        var layer_SSNMX_catalogo_20000101_20240227_CDMX_4 = new L.geoJson(json_SSNMX_catalogo_20000101_20240227_CDMX_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_SSNMX_catalogo_20000101_20240227_CDMX_4',
+            layerName: 'layer_SSNMX_catalogo_20000101_20240227_CDMX_4',
+            pane: 'pane_SSNMX_catalogo_20000101_20240227_CDMX_4',
+            onEachFeature: pop_SSNMX_catalogo_20000101_20240227_CDMX_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_SSNMX_catalogo_20000101_20240227_CDMX_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_SSNMX_catalogo_20000101_20240227_CDMX_4);
+        map.addLayer(layer_SSNMX_catalogo_20000101_20240227_CDMX_4);
+        function pop_Alcaldas_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_ent'] !== null ? autolinker.link(feature.properties['cve_ent'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cvegeo'] !== null ? autolinker.link(feature.properties['cvegeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['pobl'] !== null ? autolinker.link(feature.properties['pobl'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Alcaldas_5_0() {
+            return {
+                pane: 'pane_Alcaldas_5',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,0.0)',
+                interactive: false,
+            }
+        }
+        function style_Alcaldas_5_1() {
+            return {
+                pane: 'pane_Alcaldas_5',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,255,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Alcaldas_5');
+        map.getPane('pane_Alcaldas_5').style.zIndex = 405;
+        map.getPane('pane_Alcaldas_5').style['mix-blend-mode'] = 'normal';
+        var layer_Alcaldas_5 = new L.geoJson.multiStyle(json_Alcaldas_5, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Alcaldas_5',
+            layerName: 'layer_Alcaldas_5',
+            pane: 'pane_Alcaldas_5',
+            onEachFeature: pop_Alcaldas_5,
+            styles: [style_Alcaldas_5_0,style_Alcaldas_5_1,]
+        });
+        bounds_group.addLayer(layer_Alcaldas_5);
+        map.addLayer(layer_Alcaldas_5);
+        function pop_FallaMixcoac_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_FallaMixcoac_6_0() {
+            return {
+                pane: 'pane_FallaMixcoac_6',
+                opacity: 1,
+                color: 'rgba(227,26,28,1.0)',
+                dashArray: '9.0,18.0',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 9.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        function style_FallaMixcoac_6_1() {
+            return {
+                pane: 'pane_FallaMixcoac_6',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_FallaMixcoac_6');
+        map.getPane('pane_FallaMixcoac_6').style.zIndex = 406;
+        map.getPane('pane_FallaMixcoac_6').style['mix-blend-mode'] = 'normal';
+        var layer_FallaMixcoac_6 = new L.geoJson.multiStyle(json_FallaMixcoac_6, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_FallaMixcoac_6',
+            layerName: 'layer_FallaMixcoac_6',
+            pane: 'pane_FallaMixcoac_6',
+            onEachFeature: pop_FallaMixcoac_6,
+            styles: [style_FallaMixcoac_6_0,style_FallaMixcoac_6_1,]
+        });
+        bounds_group.addLayer(layer_FallaMixcoac_6);
+        map.addLayer(layer_FallaMixcoac_6);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/FallaMixcoac_6.png" /> Falla Mixcoac': layer_FallaMixcoac_6,'<img src="legend/Alcaldas_5.png" /> Alcaldías': layer_Alcaldas_5,'SSNMX_catalogo_20000101_20240227_CDMX<br /><table><tr><td style="text-align: center;"><img src="legend/SSNMX_catalogo_20000101_20240227_CDMX_4_03140.png" /></td><td>0.3 - 1.4</td></tr><tr><td style="text-align: center;"><img src="legend/SSNMX_catalogo_20000101_20240227_CDMX_4_14191.png" /></td><td>1.4 - 1.9</td></tr><tr><td style="text-align: center;"><img src="legend/SSNMX_catalogo_20000101_20240227_CDMX_4_19242.png" /></td><td>1.9 - 2.4</td></tr><tr><td style="text-align: center;"><img src="legend/SSNMX_catalogo_20000101_20240227_CDMX_4_2433.png" /></td><td>2.4 - 3</td></tr><tr><td style="text-align: center;"><img src="legend/SSNMX_catalogo_20000101_20240227_CDMX_4_344.png" /></td><td>3 - 4</td></tr></table>': layer_SSNMX_catalogo_20000101_20240227_CDMX_4,'Buffers por 2 km<br /><table><tr><td style="text-align: center;"><img src="legend/Bufferspor2km_3_10.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/Bufferspor2km_3_21.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/Bufferspor2km_3_32.png" /></td><td>3</td></tr><tr><td style="text-align: center;"><img src="legend/Bufferspor2km_3_43.png" /></td><td>4</td></tr></table>': layer_Bufferspor2km_3,'Colonias por alcaldía<br /><table><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_ALVAROOBREGON0.png" /></td><td>ALVARO OBREGON</td></tr><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_BENITOJUAREZ1.png" /></td><td>BENITO JUAREZ</td></tr><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_COYOACAN2.png" /></td><td>COYOACAN</td></tr><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_CUAJIMALPADEMORELOS3.png" /></td><td>CUAJIMALPA DE MORELOS</td></tr><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_CUAUHTEMOC4.png" /></td><td>CUAUHTEMOC</td></tr><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_IZTACALCO5.png" /></td><td>IZTACALCO</td></tr><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_IZTAPALAPA6.png" /></td><td>IZTAPALAPA</td></tr><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_LAMAGDALENACONTRERAS7.png" /></td><td>LA MAGDALENA CONTRERAS</td></tr><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_MIGUELHIDALGO8.png" /></td><td>MIGUEL HIDALGO</td></tr><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_TLALPAN9.png" /></td><td>TLALPAN</td></tr><tr><td style="text-align: center;"><img src="legend/Coloniasporalcalda_2_VENUSTIANOCARRANZA10.png" /></td><td>VENUSTIANO CARRANZA</td></tr></table>': layer_Coloniasporalcalda_2,"Google Road": layer_GoogleRoad_1,"Positron": layer_Positron_0,}).addTo(map);
+        setBounds();
+        resetLabels([layer_Coloniasporalcalda_2,layer_Bufferspor2km_3]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Coloniasporalcalda_2,layer_Bufferspor2km_3]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Coloniasporalcalda_2,layer_Bufferspor2km_3]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Coloniasporalcalda_2,layer_Bufferspor2km_3]);
+        });
+        </script>
+    </body>
+</html>
