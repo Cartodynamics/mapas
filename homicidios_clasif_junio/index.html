@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/Alcaldas_2.js"></script>
+        <script src="data/Clusters_3.js"></script>
+        <script src="data/Homicidiosportipodearma_4.js"></script>
+        <script src="data/Clasificacincontextualarmadefuego_5.js"></script>
+        <script src="data/Homicidioseneromayo_6.js"></script>
+        <script src="data/Homicidiosjunio_7.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.236046722053665,-99.44579233287585],[19.522615547439422,-98.88014901004097]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        document.querySelector(".leaflet-popup-pane").addEventListener("load", function(event) {
+          var tagName = event.target.tagName,
+            popup = map._popup;
+          // Also check if flag is already set.
+          if (tagName === "IMG" && popup && !popup._updated) {
+            popup._updated = true; // Set flag to prevent looping.
+            popup.update();
+          }
+        }, true);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleRoad_0');
+        map.getPane('pane_GoogleRoad_0').style.zIndex = 400;
+        var layer_GoogleRoad_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleRoad_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleRoad_0;
+        map.createPane('pane_Positron_1');
+        map.getPane('pane_Positron_1').style.zIndex = 401;
+        var layer_Positron_1 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Positron_1',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Positron_1;
+        map.addLayer(layer_Positron_1);
+        function pop_Alcaldas_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['g_pnt_2'] !== null ? autolinker.link(feature.properties['g_pnt_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geo_shp'] !== null ? autolinker.link(feature.properties['geo_shp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['frecuencia'] !== null ? autolinker.link(feature.properties['frecuencia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Alcaldas_2_0() {
+            return {
+                pane: 'pane_Alcaldas_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,89,137,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Alcaldas_2');
+        map.getPane('pane_Alcaldas_2').style.zIndex = 402;
+        map.getPane('pane_Alcaldas_2').style['mix-blend-mode'] = 'normal';
+        var layer_Alcaldas_2 = new L.geoJson(json_Alcaldas_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Alcaldas_2',
+            layerName: 'layer_Alcaldas_2',
+            pane: 'pane_Alcaldas_2',
+            onEachFeature: pop_Alcaldas_2,
+            style: style_Alcaldas_2_0,
+        });
+        bounds_group.addLayer(layer_Alcaldas_2);
+        map.addLayer(layer_Alcaldas_2);
+        function pop_Clusters_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CLUSTER_ID'] !== null ? autolinker.link(feature.properties['CLUSTER_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['area'] !== null ? autolinker.link(feature.properties['area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['perimeter'] !== null ? autolinker.link(feature.properties['perimeter'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Clusters_3_0() {
+            return {
+                pane: 'pane_Clusters_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,46,105,0.30196078431372547)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Clusters_3');
+        map.getPane('pane_Clusters_3').style.zIndex = 403;
+        map.getPane('pane_Clusters_3').style['mix-blend-mode'] = 'normal';
+        var layer_Clusters_3 = new L.geoJson(json_Clusters_3, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Clusters_3',
+            layerName: 'layer_Clusters_3',
+            pane: 'pane_Clusters_3',
+            onEachFeature: pop_Clusters_3,
+            style: style_Clusters_3_0,
+        });
+        bounds_group.addLayer(layer_Clusters_3);
+        map.addLayer(layer_Clusters_3);
+        function pop_Homicidiosportipodearma_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Carpeta</th>\
+                        <td>' + (feature.properties['CI FORMATO'] !== null ? autolinker.link(feature.properties['CI FORMATO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Fecha inicio</th>\
+                        <td>' + (feature.properties['FECHA DE I'] !== null ? autolinker.link(feature.properties['FECHA DE I'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Modalidad</th>\
+                        <td>' + (feature.properties['MODALIDAD'] !== null ? autolinker.link(feature.properties['MODALIDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Sector</th>\
+                        <td>' + (feature.properties['SECTOR'] !== null ? autolinker.link(feature.properties['SECTOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Clasificación</th>\
+                        <td>' + (feature.properties['CLASIFICAC'] !== null ? autolinker.link(feature.properties['CLASIFICAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Homicidiosportipodearma_4_0(feature) {
+            switch(String(feature.properties['MODALIDAD'])) {
+                case 'HOMICIDIO POR ARMA DE FUEGO':
+                    return {
+                pane: 'pane_Homicidiosportipodearma_4',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(214,47,100,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'HOMICIDIO POR GOLPES':
+                    return {
+                pane: 'pane_Homicidiosportipodearma_4',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(25,78,21,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'HOMICIDIO POR ARMA BLANCA':
+                    return {
+                pane: 'pane_Homicidiosportipodearma_4',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(21,80,119,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'HOMICIDIOS INTENCIONALES (OTROS)':
+                    return {
+                pane: 'pane_Homicidiosportipodearma_4',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(37,142,212,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Homicidiosportipodearma_4');
+        map.getPane('pane_Homicidiosportipodearma_4').style.zIndex = 404;
+        map.getPane('pane_Homicidiosportipodearma_4').style['mix-blend-mode'] = 'normal';
+        var layer_Homicidiosportipodearma_4 = new L.geoJson(json_Homicidiosportipodearma_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Homicidiosportipodearma_4',
+            layerName: 'layer_Homicidiosportipodearma_4',
+            pane: 'pane_Homicidiosportipodearma_4',
+            onEachFeature: pop_Homicidiosportipodearma_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Homicidiosportipodearma_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Homicidiosportipodearma_4);
+        function pop_Clasificacincontextualarmadefuego_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Carpeta</th>\
+                        <td>' + (feature.properties['CI FORMATO'] !== null ? autolinker.link(feature.properties['CI FORMATO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Fecha inicio</th>\
+                        <td>' + (feature.properties['FECHA DE I'] !== null ? autolinker.link(feature.properties['FECHA DE I'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Modalidad</th>\
+                        <td>' + (feature.properties['MODALIDAD'] !== null ? autolinker.link(feature.properties['MODALIDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Sector</th>\
+                        <td>' + (feature.properties['SECTOR'] !== null ? autolinker.link(feature.properties['SECTOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Clasificación</th>\
+                        <td>' + (feature.properties['CLASIFICAC'] !== null ? autolinker.link(feature.properties['CLASIFICAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Clasificacincontextualarmadefuego_5_0(feature) {
+            switch(String(feature.properties['CLASIFICAC'])) {
+                case 'Robo':
+                    return {
+                pane: 'pane_Clasificacincontextualarmadefuego_5',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(184,16,240,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Riña':
+                    return {
+                pane: 'pane_Clasificacincontextualarmadefuego_5',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(226,51,59,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Violencia de género':
+                    return {
+                pane: 'pane_Clasificacincontextualarmadefuego_5',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(96,78,200,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ajuste de cuentas entre delincuentes':
+                    return {
+                pane: 'pane_Clasificacincontextualarmadefuego_5',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(62,212,202,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Bala perdida':
+                    return {
+                pane: 'pane_Clasificacincontextualarmadefuego_5',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,122,24,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Conflictos personales':
+                    return {
+                pane: 'pane_Clasificacincontextualarmadefuego_5',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,213,104,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ejecución':
+                    return {
+                pane: 'pane_Clasificacincontextualarmadefuego_5',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(239,71,180,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Grupos delictivos':
+                    return {
+                pane: 'pane_Clasificacincontextualarmadefuego_5',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(207,220,125,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Crimen de odio':
+                    return {
+                pane: 'pane_Clasificacincontextualarmadefuego_5',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(35,223,98,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Desconocido':
+                    return {
+                pane: 'pane_Clasificacincontextualarmadefuego_5',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(174,174,174,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Clasificacincontextualarmadefuego_5');
+        map.getPane('pane_Clasificacincontextualarmadefuego_5').style.zIndex = 405;
+        map.getPane('pane_Clasificacincontextualarmadefuego_5').style['mix-blend-mode'] = 'normal';
+        var layer_Clasificacincontextualarmadefuego_5 = new L.geoJson(json_Clasificacincontextualarmadefuego_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Clasificacincontextualarmadefuego_5',
+            layerName: 'layer_Clasificacincontextualarmadefuego_5',
+            pane: 'pane_Clasificacincontextualarmadefuego_5',
+            onEachFeature: pop_Clasificacincontextualarmadefuego_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Clasificacincontextualarmadefuego_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Clasificacincontextualarmadefuego_5);
+        function pop_Homicidioseneromayo_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Carpeta</th>\
+                        <td>' + (feature.properties['CI FORMATO'] !== null ? autolinker.link(feature.properties['CI FORMATO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Fecha de inicio</th>\
+                        <td>' + (feature.properties['FECHA DE I'] !== null ? autolinker.link(feature.properties['FECHA DE I'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Modalidad</th>\
+                        <td>' + (feature.properties['MODALIDAD'] !== null ? autolinker.link(feature.properties['MODALIDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Sector</th>\
+                        <td>' + (feature.properties['SECTOR'] !== null ? autolinker.link(feature.properties['SECTOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Clasificación</th>\
+                        <td>' + (feature.properties['CLASIFICAC'] !== null ? autolinker.link(feature.properties['CLASIFICAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Homicidioseneromayo_6_0() {
+            return {
+                pane: 'pane_Homicidioseneromayo_6',
+                shape: 'diamond',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(174,174,174,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Homicidioseneromayo_6');
+        map.getPane('pane_Homicidioseneromayo_6').style.zIndex = 406;
+        map.getPane('pane_Homicidioseneromayo_6').style['mix-blend-mode'] = 'normal';
+        var layer_Homicidioseneromayo_6 = new L.geoJson(json_Homicidioseneromayo_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Homicidioseneromayo_6',
+            layerName: 'layer_Homicidioseneromayo_6',
+            pane: 'pane_Homicidioseneromayo_6',
+            onEachFeature: pop_Homicidioseneromayo_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Homicidioseneromayo_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Homicidioseneromayo_6);
+        map.addLayer(layer_Homicidioseneromayo_6);
+        function pop_Homicidiosjunio_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Carpeta</th>\
+                        <td>' + (feature.properties['CI FORMATO'] !== null ? autolinker.link(feature.properties['CI FORMATO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Fecha inicio</th>\
+                        <td>' + (feature.properties['FECHA DE I'] !== null ? autolinker.link(feature.properties['FECHA DE I'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Modalidad</th>\
+                        <td>' + (feature.properties['MODALIDAD'] !== null ? autolinker.link(feature.properties['MODALIDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Sector</th>\
+                        <td>' + (feature.properties['SECTOR'] !== null ? autolinker.link(feature.properties['SECTOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Clasificación</th>\
+                        <td>' + (feature.properties['CLASIFICAC'] !== null ? autolinker.link(feature.properties['CLASIFICAC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Homicidiosjunio_7_0() {
+            return {
+                pane: 'pane_Homicidiosjunio_7',
+                shape: 'diamond',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(214,47,100,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Homicidiosjunio_7');
+        map.getPane('pane_Homicidiosjunio_7').style.zIndex = 407;
+        map.getPane('pane_Homicidiosjunio_7').style['mix-blend-mode'] = 'normal';
+        var layer_Homicidiosjunio_7 = new L.geoJson(json_Homicidiosjunio_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Homicidiosjunio_7',
+            layerName: 'layer_Homicidiosjunio_7',
+            pane: 'pane_Homicidiosjunio_7',
+            onEachFeature: pop_Homicidiosjunio_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Homicidiosjunio_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Homicidiosjunio_7);
+        map.addLayer(layer_Homicidiosjunio_7);
+        var baseMaps = {};
+        var overlaysTree = [
+            {label: '<img src="legend/Homicidiosjunio_7.png" /> Homicidios junio', layer: layer_Homicidiosjunio_7},
+            {label: '<img src="legend/Homicidioseneromayo_6.png" /> Homicidios enero-mayo', layer: layer_Homicidioseneromayo_6},
+            {label: 'Clasificación contextual (arma de fuego)<br /><table><tr><td style="text-align: center;"><img src="legend/Clasificacincontextualarmadefuego_5_Robo0.png" /></td><td>Robo</td></tr><tr><td style="text-align: center;"><img src="legend/Clasificacincontextualarmadefuego_5_Riña1.png" /></td><td>Riña</td></tr><tr><td style="text-align: center;"><img src="legend/Clasificacincontextualarmadefuego_5_Violenciadegénero2.png" /></td><td>Violencia de género</td></tr><tr><td style="text-align: center;"><img src="legend/Clasificacincontextualarmadefuego_5_Ajustedecuentasentredelincuentes3.png" /></td><td>Ajuste de cuentas entre delincuentes</td></tr><tr><td style="text-align: center;"><img src="legend/Clasificacincontextualarmadefuego_5_Balaperdida4.png" /></td><td>Bala perdida</td></tr><tr><td style="text-align: center;"><img src="legend/Clasificacincontextualarmadefuego_5_Conflictospersonales5.png" /></td><td>Conflictos personales</td></tr><tr><td style="text-align: center;"><img src="legend/Clasificacincontextualarmadefuego_5_Ejecución6.png" /></td><td>Ejecución</td></tr><tr><td style="text-align: center;"><img src="legend/Clasificacincontextualarmadefuego_5_Gruposdelictivos7.png" /></td><td>Grupos delictivos</td></tr><tr><td style="text-align: center;"><img src="legend/Clasificacincontextualarmadefuego_5_Crimendeodio8.png" /></td><td>Crimen de odio</td></tr><tr><td style="text-align: center;"><img src="legend/Clasificacincontextualarmadefuego_5_Desconocido9.png" /></td><td>Desconocido</td></tr></table>', layer: layer_Clasificacincontextualarmadefuego_5},
+            {label: 'Homicidios por tipo de arma<br /><table><tr><td style="text-align: center;"><img src="legend/Homicidiosportipodearma_4_HOMICIDIOPORARMADEFUEGO0.png" /></td><td>HOMICIDIO POR ARMA DE FUEGO</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosportipodearma_4_HOMICIDIOPORGOLPES1.png" /></td><td>HOMICIDIO POR GOLPES</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosportipodearma_4_HOMICIDIOPORARMABLANCA2.png" /></td><td>HOMICIDIO POR ARMA BLANCA</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosportipodearma_4_HOMICIDIOSINTENCIONALESOTROS3.png" /></td><td>HOMICIDIOS INTENCIONALES (OTROS)</td></tr></table>', layer: layer_Homicidiosportipodearma_4},
+            {label: '<img src="legend/Clusters_3.png" /> Clusters', layer: layer_Clusters_3},
+            {label: '<img src="legend/Alcaldas_2.png" /> Alcaldías', layer: layer_Alcaldas_2},
+            {label: "Positron", layer: layer_Positron_1},
+            {label: "Google Road", layer: layer_GoogleRoad_0},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: false, 
+        });
+        lay.addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
