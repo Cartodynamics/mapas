@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/Sectores_1.js"></script>
+        <script src="data/Alcaldas_2.js"></script>
+        <script src="data/Clusters_3.js"></script>
+        <script src="data/Homicidiosporclasificacincontextual__4.js"></script>
+        <script src="data/Homicidiosportipodearma_5.js"></script>
+        <script src="data/Homicidiosclasificacincontextualgrupos__6.js"></script>
+        <script src="data/Homicidiosenesept_7.js"></script>
+        <script src="data/Homicidiosoctubre_8.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[19.17405840102045,-99.58627219969196],[19.67915135626527,-98.58843071988039]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0].innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0].className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Positron_0');
+        map.getPane('pane_Positron_0').style.zIndex = 400;
+        var layer_Positron_0 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Positron_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Positron_0;
+        map.addLayer(layer_Positron_0);
+        function pop_Sectores_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">delegacion</th>\
+                        <td>' + (feature.properties['delegacion'] !== null ? autolinker.link(feature.properties['delegacion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">zona</th>\
+                        <td class="visible-with-data" id="zona">' + (feature.properties['zona'] !== null ? autolinker.link(feature.properties['zona'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">nombre_sec</th>\
+                        <td>' + (feature.properties['nombre_sec'] !== null ? autolinker.link(feature.properties['nombre_sec'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Sectores_1_0() {
+            return {
+                pane: 'pane_Sectores_1',
+                opacity: 1,
+                color: 'rgba(251,90,153,0.5)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Sectores_1');
+        map.getPane('pane_Sectores_1').style.zIndex = 401;
+        map.getPane('pane_Sectores_1').style['mix-blend-mode'] = 'normal';
+        var layer_Sectores_1 = new L.geoJson(json_Sectores_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Sectores_1',
+            layerName: 'layer_Sectores_1',
+            pane: 'pane_Sectores_1',
+            onEachFeature: pop_Sectores_1,
+            style: style_Sectores_1_0,
+        });
+        bounds_group.addLayer(layer_Sectores_1);
+        function pop_Alcaldas_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomgeo'] !== null ? autolinker.link(feature.properties['nomgeo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cve_mun'] !== null ? autolinker.link(feature.properties['cve_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['g_pnt_2'] !== null ? autolinker.link(feature.properties['g_pnt_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geo_shp'] !== null ? autolinker.link(feature.properties['geo_shp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['frecuencia'] !== null ? autolinker.link(feature.properties['frecuencia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Alcaldas_2_0() {
+            return {
+                pane: 'pane_Alcaldas_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,89,137,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Alcaldas_2');
+        map.getPane('pane_Alcaldas_2').style.zIndex = 402;
+        map.getPane('pane_Alcaldas_2').style['mix-blend-mode'] = 'normal';
+        var layer_Alcaldas_2 = new L.geoJson(json_Alcaldas_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Alcaldas_2',
+            layerName: 'layer_Alcaldas_2',
+            pane: 'pane_Alcaldas_2',
+            onEachFeature: pop_Alcaldas_2,
+            style: style_Alcaldas_2_0,
+        });
+        bounds_group.addLayer(layer_Alcaldas_2);
+        map.addLayer(layer_Alcaldas_2);
+        function pop_Clusters_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CLUSTER_ID'] !== null ? autolinker.link(feature.properties['CLUSTER_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['area'] !== null ? autolinker.link(feature.properties['area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['perimeter'] !== null ? autolinker.link(feature.properties['perimeter'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Clusters_3_0() {
+            return {
+                pane: 'pane_Clusters_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,46,105,0.30196078431372547)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Clusters_3');
+        map.getPane('pane_Clusters_3').style.zIndex = 403;
+        map.getPane('pane_Clusters_3').style['mix-blend-mode'] = 'normal';
+        var layer_Clusters_3 = new L.geoJson(json_Clusters_3, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Clusters_3',
+            layerName: 'layer_Clusters_3',
+            pane: 'pane_Clusters_3',
+            onEachFeature: pop_Clusters_3,
+            style: style_Clusters_3_0,
+        });
+        bounds_group.addLayer(layer_Clusters_3);
+        map.addLayer(layer_Clusters_3);
+        function pop_Homicidiosporclasificacincontextual__4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Carpeta</th>\
+                        <td>' + (feature.properties['ci_formato_siap_fsiap'] !== null ? autolinker.link(feature.properties['ci_formato_siap_fsiap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Fecha inicio</th>\
+                        <td>' + (feature.properties['fecha_de_inicio'] !== null ? autolinker.link(feature.properties['fecha_de_inicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Modalidad</th>\
+                        <td>' + (feature.properties['modalidad_delito'] !== null ? autolinker.link(feature.properties['modalidad_delito'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Clasificación</th>\
+                        <td>' + (feature.properties['clasificacion_contextual'] !== null ? autolinker.link(feature.properties['clasificacion_contextual'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Homicidiosporclasificacincontextual__4_0(feature) {
+            switch(String(feature.properties['clasificacion_contextual'])) {
+                case 'Ajuste de cuentas entre delincuentes':
+                    return {
+                pane: 'pane_Homicidiosporclasificacincontextual__4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(50,227,240,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Bala perdida':
+                    return {
+                pane: 'pane_Homicidiosporclasificacincontextual__4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,198,39,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Conflictos personales':
+                    return {
+                pane: 'pane_Homicidiosporclasificacincontextual__4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(88,202,84,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Crimen de odio':
+                    return {
+                pane: 'pane_Homicidiosporclasificacincontextual__4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(17,234,129,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Desconocido':
+                    return {
+                pane: 'pane_Homicidiosporclasificacincontextual__4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(88,143,225,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ejecución':
+                    return {
+                pane: 'pane_Homicidiosporclasificacincontextual__4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(124,204,19,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Grupos delictivos':
+                    return {
+                pane: 'pane_Homicidiosporclasificacincontextual__4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,69,188,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Riña':
+                    return {
+                pane: 'pane_Homicidiosporclasificacincontextual__4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(168,58,216,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Robo':
+                    return {
+                pane: 'pane_Homicidiosporclasificacincontextual__4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,96,27,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Violencia de género':
+                    return {
+                pane: 'pane_Homicidiosporclasificacincontextual__4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(123,109,205,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Homicidiosporclasificacincontextual__4');
+        map.getPane('pane_Homicidiosporclasificacincontextual__4').style.zIndex = 404;
+        map.getPane('pane_Homicidiosporclasificacincontextual__4').style['mix-blend-mode'] = 'normal';
+        var layer_Homicidiosporclasificacincontextual__4 = new L.geoJson(json_Homicidiosporclasificacincontextual__4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Homicidiosporclasificacincontextual__4',
+            layerName: 'layer_Homicidiosporclasificacincontextual__4',
+            pane: 'pane_Homicidiosporclasificacincontextual__4',
+            onEachFeature: pop_Homicidiosporclasificacincontextual__4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Homicidiosporclasificacincontextual__4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Homicidiosporclasificacincontextual__4);
+        map.addLayer(layer_Homicidiosporclasificacincontextual__4);
+        function pop_Homicidiosportipodearma_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ci_formato_siap_fsiap</th>\
+                        <td>' + (feature.properties['ci_formato_siap_fsiap'] !== null ? autolinker.link(feature.properties['ci_formato_siap_fsiap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Carpeta</th>\
+                        <td>' + (feature.properties['fecha_de_inicio'] !== null ? autolinker.link(feature.properties['fecha_de_inicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Modalidad</th>\
+                        <td>' + (feature.properties['modalidad_delito'] !== null ? autolinker.link(feature.properties['modalidad_delito'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Clasificación</th>\
+                        <td>' + (feature.properties['clasificacion_contextual'] !== null ? autolinker.link(feature.properties['clasificacion_contextual'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Homicidiosportipodearma_5_0(feature) {
+            switch(String(feature.properties['modalidad_delito'])) {
+                case 'HOMICIDIO POR ARMA DE FUEGO':
+                    return {
+                pane: 'pane_Homicidiosportipodearma_5',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,47,99,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'HOMICIDIO POR ARMA BLANCA':
+                    return {
+                pane: 'pane_Homicidiosportipodearma_5',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(125,159,251,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'HOMICIDIO POR GOLPES':
+                    return {
+                pane: 'pane_Homicidiosportipodearma_5',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'HOMICIDIOS INTENCIONALES (OTROS)':
+                    return {
+                pane: 'pane_Homicidiosportipodearma_5',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(87,209,121,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'HOMICIDIO POR AHORCAMIENTO':
+                    return {
+                pane: 'pane_Homicidiosportipodearma_5',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,196,112,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Homicidiosportipodearma_5');
+        map.getPane('pane_Homicidiosportipodearma_5').style.zIndex = 405;
+        map.getPane('pane_Homicidiosportipodearma_5').style['mix-blend-mode'] = 'normal';
+        var layer_Homicidiosportipodearma_5 = new L.geoJson(json_Homicidiosportipodearma_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Homicidiosportipodearma_5',
+            layerName: 'layer_Homicidiosportipodearma_5',
+            pane: 'pane_Homicidiosportipodearma_5',
+            onEachFeature: pop_Homicidiosportipodearma_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Homicidiosportipodearma_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Homicidiosportipodearma_5);
+        map.addLayer(layer_Homicidiosportipodearma_5);
+        function pop_Homicidiosclasificacincontextualgrupos__6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Carpeta</th>\
+                        <td>' + (feature.properties['ci_formato_siap_fsiap'] !== null ? autolinker.link(feature.properties['ci_formato_siap_fsiap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Fecha inicio</th>\
+                        <td>' + (feature.properties['fecha_de_inicio'] !== null ? autolinker.link(feature.properties['fecha_de_inicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Modalidad</th>\
+                        <td>' + (feature.properties['modalidad_delito'] !== null ? autolinker.link(feature.properties['modalidad_delito'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Clasificación</th>\
+                        <td>' + (feature.properties['clasificacion_contextual'] !== null ? autolinker.link(feature.properties['clasificacion_contextual'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Homicidiosclasificacincontextualgrupos__6_0(feature) {
+            switch(String(feature.properties['clasificacion_contextual'])) {
+                case 'Ajuste de cuentas entre delincuentes':
+                    return {
+                pane: 'pane_Homicidiosclasificacincontextualgrupos__6',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,19,173,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Ejecución':
+                    return {
+                pane: 'pane_Homicidiosclasificacincontextualgrupos__6',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(87,209,121,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Grupos delictivos':
+                    return {
+                pane: 'pane_Homicidiosclasificacincontextualgrupos__6',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(31,120,180,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Homicidiosclasificacincontextualgrupos__6');
+        map.getPane('pane_Homicidiosclasificacincontextualgrupos__6').style.zIndex = 406;
+        map.getPane('pane_Homicidiosclasificacincontextualgrupos__6').style['mix-blend-mode'] = 'normal';
+        var layer_Homicidiosclasificacincontextualgrupos__6 = new L.geoJson(json_Homicidiosclasificacincontextualgrupos__6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Homicidiosclasificacincontextualgrupos__6',
+            layerName: 'layer_Homicidiosclasificacincontextualgrupos__6',
+            pane: 'pane_Homicidiosclasificacincontextualgrupos__6',
+            onEachFeature: pop_Homicidiosclasificacincontextualgrupos__6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Homicidiosclasificacincontextualgrupos__6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Homicidiosclasificacincontextualgrupos__6);
+        map.addLayer(layer_Homicidiosclasificacincontextualgrupos__6);
+        function pop_Homicidiosenesept_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Carpeta</th>\
+                        <td>' + (feature.properties['ci_formato_siap_fsiap'] !== null ? autolinker.link(feature.properties['ci_formato_siap_fsiap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Fecha inicio</th>\
+                        <td>' + (feature.properties['fecha_de_inicio'] !== null ? autolinker.link(feature.properties['fecha_de_inicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Modalidad</th>\
+                        <td>' + (feature.properties['modalidad_delito'] !== null ? autolinker.link(feature.properties['modalidad_delito'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Clasificación</th>\
+                        <td>' + (feature.properties['clasificacion_contextual'] !== null ? autolinker.link(feature.properties['clasificacion_contextual'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Homicidiosenesept_7_0() {
+            return {
+                pane: 'pane_Homicidiosenesept_7',
+                shape: 'diamond',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(97,97,97,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Homicidiosenesept_7');
+        map.getPane('pane_Homicidiosenesept_7').style.zIndex = 407;
+        map.getPane('pane_Homicidiosenesept_7').style['mix-blend-mode'] = 'normal';
+        var layer_Homicidiosenesept_7 = new L.geoJson(json_Homicidiosenesept_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Homicidiosenesept_7',
+            layerName: 'layer_Homicidiosenesept_7',
+            pane: 'pane_Homicidiosenesept_7',
+            onEachFeature: pop_Homicidiosenesept_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Homicidiosenesept_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Homicidiosenesept_7);
+        map.addLayer(layer_Homicidiosenesept_7);
+        function pop_Homicidiosoctubre_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Carpeta</th>\
+                        <td>' + (feature.properties['ci_formato_siap_fsiap'] !== null ? autolinker.link(feature.properties['ci_formato_siap_fsiap'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Fecha inicio</th>\
+                        <td>' + (feature.properties['fecha_de_inicio'] !== null ? autolinker.link(feature.properties['fecha_de_inicio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Modalidad</th>\
+                        <td>' + (feature.properties['modalidad_delito'] !== null ? autolinker.link(feature.properties['modalidad_delito'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Clasificación</th>\
+                        <td>' + (feature.properties['clasificacion_contextual'] !== null ? autolinker.link(feature.properties['clasificacion_contextual'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Homicidiosoctubre_8_0() {
+            return {
+                pane: 'pane_Homicidiosoctubre_8',
+                shape: 'diamond',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(227,26,28,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Homicidiosoctubre_8');
+        map.getPane('pane_Homicidiosoctubre_8').style.zIndex = 408;
+        map.getPane('pane_Homicidiosoctubre_8').style['mix-blend-mode'] = 'normal';
+        var layer_Homicidiosoctubre_8 = new L.geoJson(json_Homicidiosoctubre_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Homicidiosoctubre_8',
+            layerName: 'layer_Homicidiosoctubre_8',
+            pane: 'pane_Homicidiosoctubre_8',
+            onEachFeature: pop_Homicidiosoctubre_8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Homicidiosoctubre_8_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Homicidiosoctubre_8);
+        map.addLayer(layer_Homicidiosoctubre_8);
+        var baseMaps = {};
+        var overlaysTree = [
+            {label: '<img src="legend/Homicidiosoctubre_8.png" /> Homicidios octubre', layer: layer_Homicidiosoctubre_8},
+            {label: '<img src="legend/Homicidiosenesept_7.png" /> Homicidios ene - sept', layer: layer_Homicidiosenesept_7},
+            {label: 'Homicidios clasificación contextual - grupos_<br /><table><tr><td style="text-align: center;"><img src="legend/Homicidiosclasificacincontextualgrupos__6_Ajustedecuentasentredelincuentes0.png" /></td><td>Ajuste de cuentas entre delincuentes</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosclasificacincontextualgrupos__6_Ejecución1.png" /></td><td>Ejecución</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosclasificacincontextualgrupos__6_Gruposdelictivos2.png" /></td><td>Grupos delictivos</td></tr></table>', layer: layer_Homicidiosclasificacincontextualgrupos__6},
+            {label: 'Homicidios por tipo de arma<br /><table><tr><td style="text-align: center;"><img src="legend/Homicidiosportipodearma_5_HOMICIDIOPORARMADEFUEGO0.png" /></td><td>HOMICIDIO POR ARMA DE FUEGO</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosportipodearma_5_HOMICIDIOPORARMABLANCA1.png" /></td><td>HOMICIDIO POR ARMA BLANCA</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosportipodearma_5_HOMICIDIOPORGOLPES2.png" /></td><td>HOMICIDIO POR GOLPES</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosportipodearma_5_HOMICIDIOSINTENCIONALESOTROS3.png" /></td><td>HOMICIDIOS INTENCIONALES (OTROS)</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosportipodearma_5_HOMICIDIOPORAHORCAMIENTO4.png" /></td><td>HOMICIDIO POR AHORCAMIENTO</td></tr></table>', layer: layer_Homicidiosportipodearma_5},
+            {label: 'Homicidios por clasificación contextual_<br /><table><tr><td style="text-align: center;"><img src="legend/Homicidiosporclasificacincontextual__4_Ajustedecuentasentredelincuentes0.png" /></td><td>Ajuste de cuentas entre delincuentes</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosporclasificacincontextual__4_Balaperdida1.png" /></td><td>Bala perdida</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosporclasificacincontextual__4_Conflictospersonales2.png" /></td><td>Conflictos personales</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosporclasificacincontextual__4_Crimendeodio3.png" /></td><td>Crimen de odio</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosporclasificacincontextual__4_Desconocido4.png" /></td><td>Desconocido</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosporclasificacincontextual__4_Ejecución5.png" /></td><td>Ejecución</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosporclasificacincontextual__4_Gruposdelictivos6.png" /></td><td>Grupos delictivos</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosporclasificacincontextual__4_Riña7.png" /></td><td>Riña</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosporclasificacincontextual__4_Robo8.png" /></td><td>Robo</td></tr><tr><td style="text-align: center;"><img src="legend/Homicidiosporclasificacincontextual__4_Violenciadegénero9.png" /></td><td>Violencia de género</td></tr></table>', layer: layer_Homicidiosporclasificacincontextual__4},
+            {label: '<img src="legend/Clusters_3.png" /> Clusters', layer: layer_Clusters_3},
+            {label: '<img src="legend/Alcaldas_2.png" /> Alcaldías', layer: layer_Alcaldas_2},
+            {label: '<img src="legend/Sectores_1.png" /> Sectores', layer: layer_Sectores_1},
+            {label: "Positron", layer: layer_Positron_0},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: false, 
+        });
+        lay.addTo(map);
+		document.addEventListener("DOMContentLoaded", function() {
+            // set new Layers List height which considers toggle icon
+            function newLayersListHeight() {
+                var layerScrollbarElement = document.querySelector('.leaflet-control-layers-scrollbar');
+                if (layerScrollbarElement) {
+                    var layersListElement = document.querySelector('.leaflet-control-layers-list');
+                    var originalHeight = layersListElement.style.height 
+                        || window.getComputedStyle(layersListElement).height;
+                    var newHeight = parseFloat(originalHeight) - 50;
+                    layersListElement.style.height = newHeight + 'px';
+                }
+            }
+            var isLayersListExpanded = true;
+            var controlLayersElement = document.querySelector('.leaflet-control-layers');
+            var toggleLayerControl = document.querySelector('.leaflet-control-layers-toggle');
+            // toggle Collapsed/Expanded and apply new Layers List height
+            toggleLayerControl.addEventListener('click', function() {
+                if (isLayersListExpanded) {
+                    controlLayersElement.classList.remove('leaflet-control-layers-expanded');
+                } else {
+                    controlLayersElement.classList.add('leaflet-control-layers-expanded');
+                }
+                isLayersListExpanded = !isLayersListExpanded;
+                newLayersListHeight()
+            });	
+			// apply new Layers List height if toggle layerstree
+			if (controlLayersElement) {
+				controlLayersElement.addEventListener('click', function(event) {
+					var toggleLayerHeaderPointer = event.target.closest('.leaflet-layerstree-header-pointer span');
+					if (toggleLayerHeaderPointer) {
+						newLayersListHeight();
+					}
+				});
+			}
+            // Collapsed/Expanded at Start to apply new height
+            setTimeout(function() {
+                toggleLayerControl.click();
+            }, 10);
+            setTimeout(function() {
+                toggleLayerControl.click();
+            }, 10);
+            // Collapsed touch/small screen
+            var isSmallScreen = window.innerWidth < 650;
+            if (isSmallScreen) {
+                setTimeout(function() {
+                    controlLayersElement.classList.remove('leaflet-control-layers-expanded');
+                    isLayersListExpanded = !isLayersListExpanded;
+                }, 500);
+            }  
+        });       
+        setBounds();
+        var i = 0;
+        layer_Sectores_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['nombre_sec'] !== null?String('<div style="color: #000000; font-size: 5pt; font-weight: bold; font-family: \'Poppins\', sans-serif;">' + layer.feature.properties['nombre_sec']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Sectores_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_Sectores_1]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Sectores_1]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Sectores_1]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Sectores_1]);
+        });
+        </script>
+    </body>
+</html>
