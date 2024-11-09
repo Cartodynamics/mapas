@@ -1,0 +1,24 @@
+// Cargar el borde del país (México)
+var mexico = ee.FeatureCollection("USDOS/LSIB_SIMPLE/2017")
+              .filter(ee.Filter.eq('country_na', 'Mexico'));
+
+// Cargar las imágenes de VIIRS Nighttime Lights
+var imagen = ee.ImageCollection("NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG")
+              .filterBounds(mexico)  // Filtrar por la región de México
+              .filterDate('2023-01-01', '2023-12-31')  // Filtrar por fechas
+              .median();  // Usar la mediana para suavizar las imágenes
+
+// Visualizar la imagen en el mapa (el canal "avg_rad" muestra la radiación promedio)
+Map.centerObject(mexico, 6); // Centrar el mapa en México
+Map.addLayer(imagen.select('avg_rad'), 
+             {min: 0, max: 50, palette: ['black', 'yellow', 'red']}, 
+             'Luz nocturna VIIRS');
+
+// Exportar la imagen a Google Drive
+Export.image.toDrive({
+  image: imagen.select('avg_rad'),  // Seleccionamos el canal de luz nocturna
+  description: 'imagen_luz_nocturna_mexico',
+  scale: 500,  // Resolución espacial (en metros)
+  region: mexico,  // Definir la región de México
+  fileFormat: 'GeoTIFF'
+});
