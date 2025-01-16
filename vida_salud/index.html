@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="data/Totalescuelaspormunicipio_2.js"></script>
+        <script src="data/Lmiteestatal_3.js"></script>
+        <script src="data/Escuelasvidasaludable_4.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[19.740583344507016,-100.085981996508],[21.216236597725114,-97.35825495359582]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0].innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0].className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.createPane('pane_Positron_1');
+        map.getPane('pane_Positron_1').style.zIndex = 401;
+        var layer_Positron_1 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Positron_1',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Positron_1;
+        map.addLayer(layer_Positron_1);
+        function pop_Totalescuelaspormunicipio_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Municipio</th>\
+                        <td>' + (feature.properties['NOMGEO'] !== null ? autolinker.link(feature.properties['NOMGEO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Total Escuelas</th>\
+                        <td>' + (feature.properties['Escuelas'] !== null ? autolinker.link(feature.properties['Escuelas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Totalescuelaspormunicipio_2_0(feature) {
+            if (feature.properties['Escuelas'] >= 4.000000 && feature.properties['Escuelas'] <= 12.600000 ) {
+                return {
+                pane: 'pane_Totalescuelaspormunicipio_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(43,131,186,0.7019607843137254)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Escuelas'] >= 12.600000 && feature.properties['Escuelas'] <= 20.000000 ) {
+                return {
+                pane: 'pane_Totalescuelaspormunicipio_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(171,221,164,0.7019607843137254)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Escuelas'] >= 20.000000 && feature.properties['Escuelas'] <= 28.800000 ) {
+                return {
+                pane: 'pane_Totalescuelaspormunicipio_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,191,0.7019607843137254)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Escuelas'] >= 28.800000 && feature.properties['Escuelas'] <= 41.000000 ) {
+                return {
+                pane: 'pane_Totalescuelaspormunicipio_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,174,97,0.7019607843137254)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Escuelas'] >= 41.000000 && feature.properties['Escuelas'] <= 160.000000 ) {
+                return {
+                pane: 'pane_Totalescuelaspormunicipio_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(215,25,28,0.7019607843137254)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Totalescuelaspormunicipio_2');
+        map.getPane('pane_Totalescuelaspormunicipio_2').style.zIndex = 402;
+        map.getPane('pane_Totalescuelaspormunicipio_2').style['mix-blend-mode'] = 'normal';
+        var layer_Totalescuelaspormunicipio_2 = new L.geoJson(json_Totalescuelaspormunicipio_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Totalescuelaspormunicipio_2',
+            layerName: 'layer_Totalescuelaspormunicipio_2',
+            pane: 'pane_Totalescuelaspormunicipio_2',
+            onEachFeature: pop_Totalescuelaspormunicipio_2,
+            style: style_Totalescuelaspormunicipio_2_0,
+        });
+        bounds_group.addLayer(layer_Totalescuelaspormunicipio_2);
+        function pop_Lmiteestatal_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVEGEO'] !== null ? autolinker.link(feature.properties['CVEGEO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVE_ENT'] !== null ? autolinker.link(feature.properties['CVE_ENT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMGEO'] !== null ? autolinker.link(feature.properties['NOMGEO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Lmiteestatal_3_0() {
+            return {
+                pane: 'pane_Lmiteestatal_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,125,183,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Lmiteestatal_3');
+        map.getPane('pane_Lmiteestatal_3').style.zIndex = 403;
+        map.getPane('pane_Lmiteestatal_3').style['mix-blend-mode'] = 'normal';
+        var layer_Lmiteestatal_3 = new L.geoJson(json_Lmiteestatal_3, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Lmiteestatal_3',
+            layerName: 'layer_Lmiteestatal_3',
+            pane: 'pane_Lmiteestatal_3',
+            onEachFeature: pop_Lmiteestatal_3,
+            style: style_Lmiteestatal_3_0,
+        });
+        bounds_group.addLayer(layer_Lmiteestatal_3);
+        map.addLayer(layer_Lmiteestatal_3);
+        function pop_Escuelasvidasaludable_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">CCT</th>\
+                        <td>' + (feature.properties['CCT'] !== null ? autolinker.link(feature.properties['CCT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE</th>\
+                        <td>' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MUNICIPIO</th>\
+                        <td>' + (feature.properties['MUNICIPIO'] !== null ? autolinker.link(feature.properties['MUNICIPIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LOCALIDAD</th>\
+                        <td>' + (feature.properties['LOCALIDAD'] !== null ? autolinker.link(feature.properties['LOCALIDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SUBNIVEL</th>\
+                        <td>' + (feature.properties['SUBNIVEL'] !== null ? autolinker.link(feature.properties['SUBNIVEL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TURNO</th>\
+                        <td>' + (feature.properties['TURNO'] !== null ? autolinker.link(feature.properties['TURNO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MATRÍCULA</th>\
+                        <td>' + (feature.properties['MATRÍCULA'] !== null ? autolinker.link(feature.properties['MATRÍCULA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PROMEDIO D</th>\
+                        <td>' + (feature.properties['PROMEDIO D'] !== null ? autolinker.link(feature.properties['PROMEDIO D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TOTAL DE G</th>\
+                        <td>' + (feature.properties['TOTAL DE G'] !== null ? autolinker.link(feature.properties['TOTAL DE G'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SERVICIO E</th>\
+                        <td>' + (feature.properties['SERVICIO E'] !== null ? autolinker.link(feature.properties['SERVICIO E'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SERREG</th>\
+                        <td>' + (feature.properties['SERREG'] !== null ? autolinker.link(feature.properties['SERREG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SERVICIO R</th>\
+                        <td>' + (feature.properties['SERVICIO R'] !== null ? autolinker.link(feature.properties['SERVICIO R'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DIRECTOR</th>\
+                        <td>' + (feature.properties['DIRECTOR'] !== null ? autolinker.link(feature.properties['DIRECTOR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TELÉFONO</th>\
+                        <td>' + (feature.properties['TELÉFONO'] !== null ? autolinker.link(feature.properties['TELÉFONO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Escuelasvidasaludable_4_0() {
+            return {
+                pane: 'pane_Escuelasvidasaludable_4',
+                radius: 2.4,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(43,131,186,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Escuelasvidasaludable_4');
+        map.getPane('pane_Escuelasvidasaludable_4').style.zIndex = 404;
+        map.getPane('pane_Escuelasvidasaludable_4').style['mix-blend-mode'] = 'normal';
+        var layer_Escuelasvidasaludable_4 = new L.geoJson(json_Escuelasvidasaludable_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Escuelasvidasaludable_4',
+            layerName: 'layer_Escuelasvidasaludable_4',
+            pane: 'pane_Escuelasvidasaludable_4',
+            onEachFeature: pop_Escuelasvidasaludable_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Escuelasvidasaludable_4_0(feature));
+            },
+        });
+        var cluster_Escuelasvidasaludable_4 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2});
+        cluster_Escuelasvidasaludable_4.addLayer(layer_Escuelasvidasaludable_4);
+
+        bounds_group.addLayer(layer_Escuelasvidasaludable_4);
+        cluster_Escuelasvidasaludable_4.addTo(map);
+        var overlaysTree = [
+            {label: '<img src="legend/Escuelasvidasaludable_4.png" /> Escuelas vida saludable', layer: cluster_Escuelasvidasaludable_4},
+            {label: '<img src="legend/Lmiteestatal_3.png" /> Límite estatal', layer: layer_Lmiteestatal_3},
+            {label: 'Total escuelas por municipio<br /><table><tr><td style="text-align: center;"><img src="legend/Totalescuelaspormunicipio_2_41260.png" /></td><td>4 - 12.6</td></tr><tr><td style="text-align: center;"><img src="legend/Totalescuelaspormunicipio_2_126201.png" /></td><td>12.6 - 20</td></tr><tr><td style="text-align: center;"><img src="legend/Totalescuelaspormunicipio_2_202882.png" /></td><td>20 - 28.8</td></tr><tr><td style="text-align: center;"><img src="legend/Totalescuelaspormunicipio_2_288413.png" /></td><td>28.8 - 41</td></tr><tr><td style="text-align: center;"><img src="legend/Totalescuelaspormunicipio_2_411604.png" /></td><td>41 - 160</td></tr></table>', layer: layer_Totalescuelaspormunicipio_2},
+            {label: "Positron", layer: layer_Positron_1},
+            {label: "Google Satellite", layer: layer_GoogleSatellite_0},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: false, 
+        });
+        lay.addTo(map);
+		document.addEventListener("DOMContentLoaded", function() {
+            // set new Layers List height which considers toggle icon
+            function newLayersListHeight() {
+                var layerScrollbarElement = document.querySelector('.leaflet-control-layers-scrollbar');
+                if (layerScrollbarElement) {
+                    var layersListElement = document.querySelector('.leaflet-control-layers-list');
+                    var originalHeight = layersListElement.style.height 
+                        || window.getComputedStyle(layersListElement).height;
+                    var newHeight = parseFloat(originalHeight) - 50;
+                    layersListElement.style.height = newHeight + 'px';
+                }
+            }
+            var isLayersListExpanded = true;
+            var controlLayersElement = document.querySelector('.leaflet-control-layers');
+            var toggleLayerControl = document.querySelector('.leaflet-control-layers-toggle');
+            // toggle Collapsed/Expanded and apply new Layers List height
+            toggleLayerControl.addEventListener('click', function() {
+                if (isLayersListExpanded) {
+                    controlLayersElement.classList.remove('leaflet-control-layers-expanded');
+                } else {
+                    controlLayersElement.classList.add('leaflet-control-layers-expanded');
+                }
+                isLayersListExpanded = !isLayersListExpanded;
+                newLayersListHeight()
+            });	
+			// apply new Layers List height if toggle layerstree
+			if (controlLayersElement) {
+				controlLayersElement.addEventListener('click', function(event) {
+					var toggleLayerHeaderPointer = event.target.closest('.leaflet-layerstree-header-pointer span');
+					if (toggleLayerHeaderPointer) {
+						newLayersListHeight();
+					}
+				});
+			}
+            // Collapsed/Expanded at Start to apply new height
+            setTimeout(function() {
+                toggleLayerControl.click();
+            }, 10);
+            setTimeout(function() {
+                toggleLayerControl.click();
+            }, 10);
+            // Collapsed touch/small screen
+            var isSmallScreen = window.innerWidth < 650;
+            if (isSmallScreen) {
+                setTimeout(function() {
+                    controlLayersElement.classList.remove('leaflet-control-layers-expanded');
+                    isLayersListExpanded = !isLayersListExpanded;
+                }, 500);
+            }  
+        });       
+        setBounds();
+        </script>
+    </body>
+</html>
